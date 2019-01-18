@@ -35,6 +35,42 @@
       "traitsEmotions": "2",
       "contextClues": "1",
       "pov": "1"
+    },
+    {
+      "name": "Vanessa Rivera",
+      "level": "R",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "1",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Cristina Coronel",
+      "level": "T",
+      "authorsPurpose": "3",
+      "mainIdea": "2",
+      "traitsEmotions": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Pilar Coronel",
+      "level": "G",
+      "authorsPurpose": "2",
+      "mainIdea": "1",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Arian Markisic",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "2"
     }
   ]
 }

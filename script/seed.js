@@ -18,6 +18,8 @@ async function seed() {
   const students = await Promise.all(
     Students.items.map(student => Student.create(student))
   );
+  await Promise.all(students.map(student => student.addUser(users[0])));
+  await Promise.all(students.map(student => student.addUser(users[1])));
   console.log(`seeded ${students.length} students`);
 }
 
