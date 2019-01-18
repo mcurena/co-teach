@@ -4,7 +4,7 @@
  * having to figure out which file they belong to!
  */
 export { default as UserHome } from "./user-home";
-export { Login, Signup } from "./AuthForm";
+export { default as Login } from "./AuthForm";
 export { default as Navbar } from "./Navbar";
 export { default as Dashboard } from "./Dashboard";
 export { default as GroupCard } from "./GroupCard";

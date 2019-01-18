@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FilterButton from "./FilterButton";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -70,66 +71,73 @@ rows.sort((a, b) => {
   return 0;
 });
 
-function Students(props) {
-  const { classes } = props;
+class Students extends React.Component {
+  render() {
+    const { classes } = this.props;
 
-  return (
-    <div>
-      <div className={classes.filters}>
-        <Typography component="h4">Filter By: </Typography>
-        <FilterButton
-          filter="Skills"
-          options={[
-            "Main Idea",
-            "Cause & Effect",
-            "Inference",
-            "Context Clues"
-          ]}
-        />
-        <FilterButton filter="Rating" options={[1, 2, 3, 4]} />
-        <FilterButton
-          filter="Skills"
-          options={[
-            "Main Idea",
-            "Cause & Effect",
-            "Inference",
-            "Context Clues"
-          ]}
-        />
-      </div>
+    return (
+      <div>
+        <div className={classes.filters}>
+          <Typography component="h4">Filter By: </Typography>
+          <FilterButton
+            filter="Skills"
+            options={[
+              "Main Idea",
+              "Cause & Effect",
+              "Inference",
+              "Context Clues"
+            ]}
+          />
+          <FilterButton filter="Rating" options={[1, 2, 3, 4]} />
+          <FilterButton
+            filter="Skills"
+            options={[
+              "Main Idea",
+              "Cause & Effect",
+              "Inference",
+              "Context Clues"
+            ]}
+          />
+        </div>
 
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Main Idea</TableCell>
-              <TableCell align="center">Inference</TableCell>
-              <TableCell align="center">Context Clues</TableCell>
-              <TableCell align="center">Cause and Effect</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(student => (
-              <TableRow key={student.id}>
-                <TableCell component="th" scope="row">
-                  <Link to={`/students/${student.id}`}>{student.name}</Link>
-                </TableCell>
-                <TableCell align="center">{student.mainIdea}</TableCell>
-                <TableCell align="center">{student.inference}</TableCell>
-                <TableCell align="center">{student.contextClues}</TableCell>
-                <TableCell align="center">{student.causeEffect}</TableCell>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="center">Main Idea</TableCell>
+                <TableCell align="center">Inference</TableCell>
+                <TableCell align="center">Context Clues</TableCell>
+                <TableCell align="center">Cause and Effect</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    </div>
-  );
+            </TableHead>
+            <TableBody>
+              {rows.map(student => (
+                <TableRow key={student.id}>
+                  <TableCell component="th" scope="row">
+                    <Link to={`/students/${student.id}`}>{student.name}</Link>
+                  </TableCell>
+                  <TableCell align="center">{student.mainIdea}</TableCell>
+                  <TableCell align="center">{student.inference}</TableCell>
+                  <TableCell align="center">{student.contextClues}</TableCell>
+                  <TableCell align="center">{student.causeEffect}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
+    );
+  }
 }
+
+const mapState = state => ({
+  students: state.students,
+  filter: state.filter
+});
 
 Students.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Students);
+export default connect(mapState, null)(withStyles(styles)(Students));

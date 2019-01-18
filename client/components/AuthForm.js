@@ -94,14 +94,6 @@ const mapLogin = state => {
   };
 };
 
-const mapSignup = state => {
-  return {
-    name: "signup",
-    displayName: "Sign Up",
-    error: state.user.error
-  };
-};
-
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
@@ -114,12 +106,7 @@ const mapDispatch = dispatch => {
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(
-  withStyles(styles)(AuthForm)
-);
-export const Signup = connect(mapSignup, mapDispatch)(
-  withStyles(styles)(AuthForm)
-);
+export default connect(mapLogin, mapDispatch)(withStyles(styles)(AuthForm));
 
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,

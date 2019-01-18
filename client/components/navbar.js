@@ -17,6 +17,7 @@ import { logout } from "../store";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import { loadStudents } from "../store";
 
 const drawerWidth = 240;
 
@@ -97,10 +98,14 @@ const styles = theme => ({
   }
 });
 
-class Dashboard extends React.Component {
+class Navbar extends React.Component {
   state = {
     open: true
   };
+
+  async componentDidMount() {
+    await this.props.loadStudents();
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -200,7 +205,7 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
+Navbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -209,11 +214,10 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  handleClick() {
-    dispatch(logout());
-  }
+  handleClick: () => dispatch(logout()),
+  loadStudents: () => dispatch(loadStudents())
 });
 
 export default withRouter(
-  connect(mapState, mapDispatch)(withStyles(styles)(Dashboard))
+  connect(mapState, mapDispatch)(withStyles(styles)(Navbar))
 );

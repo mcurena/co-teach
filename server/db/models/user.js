@@ -66,5 +66,11 @@ const setSaltAndPassword = user => {
   }
 };
 
+User.findStudents = async function(id) {
+  const user = await User.findById(id);
+  const students = await user.getStudents();
+  return students;
+};
+
 User.beforeCreate(setSaltAndPassword);
 User.beforeUpdate(setSaltAndPassword);
