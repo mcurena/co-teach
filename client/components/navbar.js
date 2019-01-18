@@ -13,6 +13,10 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./NavListItems";
+import { logout } from "../store";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
@@ -107,7 +111,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleClick, isLoggedIn } = this.props;
 
     return (
       <div className={classes.root}>
@@ -134,6 +138,8 @@ class Dashboard extends React.Component {
             >
               <MenuIcon />
             </IconButton>
+            <img className="logo" src="/apples.png" alt="Co-Teach" />
+            {"  "}
             <Typography
               component="h1"
               variant="h6"
@@ -143,6 +149,26 @@ class Dashboard extends React.Component {
             >
               Co.Teach
             </Typography>
+            {isLoggedIn ? (
+              <div>
+                <Link
+                  to="/"
+                  onClick={handleClick}
+                  style={{ textDecoration: "none", color: "#FFF" }}
+                >
+                  <Button color="inherit">Logout</Button>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link
+                  to="/login"
+                  style={{ textDecoration: "none", color: "#FFF" }}
+                >
+                  <Button color="inherit">Login</Button>
+                </Link>
+              </div>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer
@@ -178,4 +204,14 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+const mapState = state => ({
+  isLoggedIn: !!state.user.id
+});
+
+const mapDispatch = dispatch => ({
+  handleClick() {
+    dispatch(logout());
+  }
+});
+
+export default connect(mapState, mapDispatch)(withStyles(styles)(Dashboard));

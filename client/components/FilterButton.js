@@ -1,78 +1,89 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuIcon from "@material-ui/icons/Menu";
-import { Link } from "react-router-dom";
-import Axios from "axios";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import { withStyles } from "@material-ui/core/styles";
+import Input from "@material-ui/core/Input";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FilledInput from "@material-ui/core/FilledInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
-class SimpleMenu extends React.Component {
+const styles = theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
+  }
+});
+
+class FilterButton extends React.Component {
   state = {
-    anchorEl: null,
-    genres: []
+    filter: "",
+    options: [],
+    labelWidth: 0
   };
 
-  async componentDidMount() {
-    try {
-      const { data } = await Axios.get("/api/genres");
-      this.setState({ genres: data });
-    } catch (err) {
-      console.error(err);
-    }
+  componentDidMount() {
+    this.setState({
+      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      filter: this.props.filter,
+      options: this.props.options,
+      chosen: ""
+    });
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { classes } = this.props;
+    const { filter, options, chosen, labelWidth } = this.state;
     return (
-      <div>
-        <Button
-          aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>
-            <Link
-              to="/allBooks"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              Browse All Books
-            </Link>
-          </MenuItem>
-
-          {this.state.genres.map(genre => (
-            <MenuItem key={genre.id} onClick={this.handleClose}>
-              <Link
-                exact
-                to={`/genres/${genre.type}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                {genre.type}
-              </Link>
-            </MenuItem>
-          ))}
-        </Menu>
+      <div className={classes.root}>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel
+            ref={ref => {
+              this.InputLabelRef = ref;
+            }}
+            htmlFor="outlined-age-native-simple"
+          >
+            {filter}
+          </InputLabel>
+          <Select
+            native
+            value={chosen}
+            onChange={this.handleChange("chosen")}
+            input={
+              <OutlinedInput
+                name={filter}
+                labelWidth={labelWidth}
+                id="outlined-age-native-simple"
+              />
+            }
+          >
+            <option value="" />
+            {options.map(option => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
       </div>
     );
   }
 }
 
-export default SimpleMenu;
+FilterButton.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(FilterButton);

@@ -7,6 +7,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import FilterButton from "./FilterButton";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -16,53 +19,104 @@ const styles = theme => ({
   },
   table: {
     minWidth: 700
+  },
+  filters: {
+    display: "flex",
+    flexDirection: "row",
+    justify: "center"
   }
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
+  {
+    id: 1,
+    name: "Michelle",
+    mainIdea: 4,
+    causeEffect: 2,
+    inference: 2,
+    contextClues: 3
+  },
+  {
+    id: 2,
+    name: "Angel",
+    mainIdea: 3,
+    causeEffect: 3,
+    inference: 4,
+    contextClues: 2
+  },
+  {
+    id: 3,
+    name: "Salmon",
+    mainIdea: 1,
+    causeEffect: 2,
+    inference: 3,
+    contextClues: 3
+  },
+  {
+    id: 4,
+    name: "Tuna",
+    mainIdea: 3,
+    causeEffect: 4,
+    inference: 2,
+    contextClues: 4
+  }
 ];
 
 function Students(props) {
   const { classes } = props;
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Main Idea</TableCell>
-            <TableCell align="right">Inference</TableCell>
-            <TableCell align="right">Context Clues</TableCell>
-            <TableCell align="right">Cause and Effect</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+    <div>
+      <div className={classes.filters}>
+        <Typography component="h4">Filter By: </Typography>
+        <FilterButton
+          filter="Skills"
+          options={[
+            "Main Idea",
+            "Cause & Effect",
+            "Inference",
+            "Context Clues"
+          ]}
+        />
+        <FilterButton filter="Rating" options={[1, 2, 3, 4]} />
+        <FilterButton
+          filter="Skills"
+          options={[
+            "Main Idea",
+            "Cause & Effect",
+            "Inference",
+            "Context Clues"
+          ]}
+        />
+      </div>
+
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Main Idea</TableCell>
+              <TableCell align="center">Inference</TableCell>
+              <TableCell align="center">Context Clues</TableCell>
+              <TableCell align="center">Cause and Effect</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {rows.map(student => (
+              <TableRow key={student.id}>
+                <TableCell component="th" scope="row">
+                  <Link to={`/students/${student.id}`}>{student.name}</Link>
+                </TableCell>
+                <TableCell align="center">{student.mainIdea}</TableCell>
+                <TableCell align="center">{student.inference}</TableCell>
+                <TableCell align="center">{student.contextClues}</TableCell>
+                <TableCell align="center">{student.causeEffect}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </div>
   );
 }
 
