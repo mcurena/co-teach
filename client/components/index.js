@@ -10,3 +10,4 @@ export { default as Dashboard } from "./Dashboard";
 export { default as GroupCard } from "./GroupCard";
 export { default as Students } from "./Students";
 export { default as FilterButton } from "./FilterButton";
+export { default as Groups } from "./Groups";

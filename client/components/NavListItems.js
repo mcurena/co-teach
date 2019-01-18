@@ -28,12 +28,14 @@ export const mainListItems = (
         <ListItemText primary="Students" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Groups" />
-    </ListItem>
+    <Link to="/groups">
+      <ListItem button>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Groups" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <AddIcon />

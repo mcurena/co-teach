@@ -15,7 +15,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./NavListItems";
 import { logout } from "../store";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
@@ -111,7 +111,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { classes, handleClick, isLoggedIn } = this.props;
+    const { classes, handleClick, isLoggedIn, View } = this.props;
 
     return (
       <div className={classes.root}>
@@ -193,7 +193,7 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <this.props.route />
+          <View />
         </main>
       </div>
     );
@@ -214,4 +214,6 @@ const mapDispatch = dispatch => ({
   }
 });
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Dashboard));
+export default withRouter(
+  connect(mapState, mapDispatch)(withStyles(styles)(Dashboard))
+);
