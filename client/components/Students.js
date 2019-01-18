@@ -62,6 +62,14 @@ const rows = [
   }
 ];
 
+rows.sort((a, b) => {
+  const keyA = a.name;
+  const keyB = b.name;
+  if (keyA < keyB) return -1;
+  if (keyA > keyB) return 1;
+  return 0;
+});
+
 function Students(props) {
   const { classes } = props;
 

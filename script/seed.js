@@ -1,7 +1,7 @@
 "use strict";
-
 const db = require("../server/db");
-const { User } = require("../server/db/models");
+const { Students } = require("./data");
+const { Student, User } = require("../server/db/models");
 
 async function seed() {
   await db.sync({ force: true });
@@ -14,6 +14,11 @@ async function seed() {
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
+
+  const students = await Promise.all(
+    Students.items.map(student => Student.create(student))
+  );
+  console.log(`seeded ${students.length} students`);
 }
 
 // We've separated the `seed` function from the `runSeed` function.

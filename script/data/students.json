@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "name": "Michelle Ureña",
+      "level": "R",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "1",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Angel Ureña",
+      "level": "T",
+      "authorsPurpose": "3",
+      "mainIdea": "2",
+      "traitsEmotions": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Salmon Ureña",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "2"
+    },
+    {
+      "name": "Tuna Ureña",
+      "level": "G",
+      "authorsPurpose": "2",
+      "mainIdea": "1",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "1"
+    }
+  ]
+}

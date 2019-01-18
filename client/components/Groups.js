@@ -89,7 +89,8 @@ function Groups(props) {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Students</TableCell>
+              <TableCell>Group #</TableCell>
+              <TableCell align="center">Students</TableCell>
               <TableCell align="center">Skill</TableCell>
               <TableCell align="center">Rating</TableCell>
               <TableCell align="center">Active?</TableCell>
@@ -100,18 +101,21 @@ function Groups(props) {
           <TableBody>
             {rows.map(group => (
               <TableRow key={group.id}>
+                <TableCell align="center">
+                  <Link to={`/groups/${group.id}`}>{group.id}</Link>
+                </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link to={`/groups/${group.id}`}>
-                    {group.students.sort().join(", ")}
-                  </Link>
+                  {group.students.sort().join(", ")}
                 </TableCell>
                 <TableCell align="center">{group.skill}</TableCell>
                 <TableCell align="center">{group.rating}</TableCell>
                 <TableCell align="center">
                   {group.active ? "Active" : "Completed"}
                 </TableCell>
-                <TableCell align="center">{group.dates.join(", ")}</TableCell>
-                <TableCell align="center">{group.notes.join(" - ")}</TableCell>
+                <TableCell align="center">{group.dates.join(" - ")}</TableCell>
+                <TableCell component="th" scope="row">
+                  {group.notes.join(" - ")}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
