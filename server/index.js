@@ -33,8 +33,8 @@ passport.serializeUser((user, done) => done(null, user.id));
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.models.user.findById(id);
-    done(null, user);
+    const teacher = await db.models.teacher.findById(id);
+    done(null, teacher);
   } catch (err) {
     done(err);
   }
@@ -54,7 +54,7 @@ const createApp = () => {
   // session middleware with passport
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || "my best friend is Cody",
+      secret: process.env.SESSION_SECRET || "Tuna & Salmon for ever",
       store: sessionStore,
       resave: false,
       saveUninitialized: false
