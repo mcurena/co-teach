@@ -29,11 +29,11 @@ const Student = db.define("student", {
     type: Sequelize.STRING,
     defaultValue: "Not rated"
   },
-  features: {
+  textFeatures: {
     type: Sequelize.STRING,
     defaultValue: "Not rated"
   },
-  structures: {
+  textStructures: {
     type: Sequelize.STRING,
     defaultValue: "Not rated"
   },

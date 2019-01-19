@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import FilterButton from "./FilterButton";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { clearSkillFilter } from "../store";
 
 const styles = theme => ({
   root: {
@@ -28,76 +29,37 @@ const styles = theme => ({
   }
 });
 
-const rows = [
-  {
-    id: 1,
-    name: "Michelle",
-    mainIdea: 4,
-    causeEffect: 2,
-    inference: 2,
-    contextClues: 3
-  },
-  {
-    id: 2,
-    name: "Angel",
-    mainIdea: 3,
-    causeEffect: 3,
-    inference: 4,
-    contextClues: 2
-  },
-  {
-    id: 3,
-    name: "Salmon",
-    mainIdea: 1,
-    causeEffect: 2,
-    inference: 3,
-    contextClues: 3
-  },
-  {
-    id: 4,
-    name: "Tuna",
-    mainIdea: 3,
-    causeEffect: 4,
-    inference: 2,
-    contextClues: 4
-  }
-];
-
-rows.sort((a, b) => {
-  const keyA = a.name;
-  const keyB = b.name;
-  if (keyA < keyB) return -1;
-  if (keyA > keyB) return 1;
-  return 0;
-});
-
 class Students extends React.Component {
-  render() {
-    const { classes } = this.props;
+  componentWillUnmount() {
+    this.props.clearSkillFilter();
+  }
 
+  render() {
+    const { classes, skillFilter, students } = this.props;
+    const skills = {
+      "Author's Purpose": "authorsPurpose",
+      "Main Idea": "mainIdea",
+      "Traits & Emotions": "traitsEmotions",
+      "Figurative Language": "figurativeLanguage",
+      "Text Features": "textFeatures",
+      "Text Structures": "textStructures",
+      "Context Clues": "contextClues",
+      Theme: "theme",
+      "Point of View": "pov"
+    };
+
+    students.sort((a, b) => {
+      const keyA = a.name;
+      const keyB = b.name;
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
     return (
       <div>
         <div className={classes.filters}>
           <Typography component="h4">Filter By: </Typography>
-          <FilterButton
-            filter="Skills"
-            options={[
-              "Main Idea",
-              "Cause & Effect",
-              "Inference",
-              "Context Clues"
-            ]}
-          />
-          <FilterButton filter="Rating" options={[1, 2, 3, 4]} />
-          <FilterButton
-            filter="Skills"
-            options={[
-              "Main Idea",
-              "Cause & Effect",
-              "Inference",
-              "Context Clues"
-            ]}
-          />
+          <FilterButton filter="Skills" options={Object.keys(skills).sort()} />
         </div>
 
         <Paper className={classes.root}>
@@ -105,22 +67,40 @@ class Students extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell align="center">Main Idea</TableCell>
-                <TableCell align="center">Inference</TableCell>
-                <TableCell align="center">Context Clues</TableCell>
-                <TableCell align="center">Cause and Effect</TableCell>
+                {skillFilter ? (
+                  <TableCell key={skillFilter} align="center">
+                    {skillFilter}
+                  </TableCell>
+                ) : (
+                  Object.values(skills)
+                    .sort()
+                    .map(skill => (
+                      <TableCell key={skill} align="center">
+                        {skill}
+                      </TableCell>
+                    ))
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(student => (
+              {students.map(student => (
                 <TableRow key={student.id}>
                   <TableCell component="th" scope="row">
                     <Link to={`/students/${student.id}`}>{student.name}</Link>
                   </TableCell>
-                  <TableCell align="center">{student.mainIdea}</TableCell>
-                  <TableCell align="center">{student.inference}</TableCell>
-                  <TableCell align="center">{student.contextClues}</TableCell>
-                  <TableCell align="center">{student.causeEffect}</TableCell>
+                  {skillFilter ? (
+                    <TableCell key={skillFilter} align="center">
+                      {student[skills[skillFilter]]}
+                    </TableCell>
+                  ) : (
+                    Object.values(skills)
+                      .sort()
+                      .map(skill => (
+                        <TableCell key={skill} align="center">
+                          {student[skill]}
+                        </TableCell>
+                      ))
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -133,11 +113,15 @@ class Students extends React.Component {
 
 const mapState = state => ({
   students: state.students,
-  filter: state.filter
+  skillFilter: state.skillFilter
+});
+
+const mapDispatch = dispatch => ({
+  clearSkillFilter: () => dispatch(clearSkillFilter())
 });
 
 Students.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(mapState, null)(withStyles(styles)(Students));
+export default connect(mapState, mapDispatch)(withStyles(styles)(Students));
