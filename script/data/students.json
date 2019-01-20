@@ -71,6 +71,33 @@
       "traitsEmotions": "2",
       "contextClues": "1",
       "pov": "2"
+    },
+    {
+      "name": "Raul Rivera",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "2"
+    },
+    {
+      "name": "Ximena Rivera",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "2"
+    },
+    {
+      "name": "Melissa Rivera",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "contextClues": "1",
+      "pov": "2"
     }
   ]
 }

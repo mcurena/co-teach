@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import GroupCard from "./GroupCard";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   layout: {
@@ -34,129 +35,148 @@ const styles = theme => ({
   }
 });
 
-const cards = [1, 2, 3];
+class Dashboard extends React.Component {
+  render() {
+    const { classes, groups } = this.props;
 
-function Dashboard(props) {
-  const { classes } = props;
-
-  return (
-    <React.Fragment>
-      <main spacing={8}>
-        <div className={classNames(classes.layout, classes.cardGrid)}>
-          <Grid
-            container
-            spacing={8}
-            direction="column"
-            style={{ paddingRight: "3%" }}
-            alignItems="center"
+    return (
+      <React.Fragment>
+        <main spacing={8}>
+          <div className={classNames(classes.layout, classes.cardGrid)}>
+            <Grid
+              container
+              spacing={8}
+              direction="column"
+              style={{ paddingRight: "3%" }}
+              alignItems="center"
+            >
+              {" "}
+              <Grid item>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  To Meet
+                </Typography>
+              </Grid>
+              {groups.map(group => {
+                if (!group.dates) {
+                  return (
+                    <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
+                      <GroupCard group={group} />
+                    </Grid>
+                  );
+                }
+              })}
+            </Grid>
+            <Grid
+              container
+              spacing={8}
+              direction="column"
+              style={{ paddingRight: "3%" }}
+              alignItems="center"
+            >
+              <Grid item>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  Day 1
+                </Typography>
+              </Grid>
+              {groups.map(group => {
+                if (group.dates && group.dates.length === 1) {
+                  return (
+                    <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
+                      <GroupCard group={group} />
+                    </Grid>
+                  );
+                }
+              })}
+            </Grid>
+            <Grid
+              container
+              spacing={8}
+              direction="column"
+              style={{ paddingRight: "3%" }}
+              alignItems="center"
+            >
+              <Grid item>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  Day 2
+                </Typography>
+              </Grid>
+              {groups.map(group => {
+                if (group.dates && group.dates.length === 2) {
+                  return (
+                    <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
+                      <GroupCard group={group} />
+                    </Grid>
+                  );
+                }
+              })}
+            </Grid>
+            <Grid container spacing={8} direction="column" alignItems="center">
+              <Grid item>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  Day 3
+                </Typography>
+              </Grid>
+              {groups.map(group => {
+                if (group.dates && group.dates.length === 3) {
+                  return (
+                    <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
+                      <GroupCard group={group} />
+                    </Grid>
+                  );
+                }
+              })}
+            </Grid>
+          </div>
+        </main>
+        <footer className={classes.footer}>
+          <Typography variant="h6" align="center" gutterBottom>
+            Footer
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="textSecondary"
+            component="p"
           >
-            {" "}
-            <Grid item>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                noWrap
-                className={classes.title}
-              >
-                To Meet
-              </Typography>
-            </Grid>
-            {cards.map(card => (
-              <Grid item key={card} style={{ paddingBottom: "10%" }}>
-                <GroupCard />
-              </Grid>
-            ))}
-          </Grid>
-          <Grid
-            container
-            spacing={8}
-            direction="column"
-            style={{ paddingRight: "3%" }}
-            alignItems="center"
-          >
-            <Grid item>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                noWrap
-                className={classes.title}
-              >
-                Day 1
-              </Typography>
-            </Grid>
-            {[1, 2].map(card => (
-              <Grid item key={card} style={{ paddingBottom: "10%" }}>
-                <GroupCard />
-              </Grid>
-            ))}
-          </Grid>
-          <Grid
-            container
-            spacing={8}
-            direction="column"
-            style={{ paddingRight: "3%" }}
-            alignItems="center"
-          >
-            <Grid item>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                noWrap
-                className={classes.title}
-              >
-                Day 2
-              </Typography>
-            </Grid>
-            {[1, 2, 3, 4].map(card => (
-              <Grid item key={card} style={{ paddingBottom: "10%" }}>
-                <GroupCard />
-              </Grid>
-            ))}
-          </Grid>
-          <Grid container spacing={8} direction="column" alignItems="center">
-            <Grid item>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                noWrap
-                className={classes.title}
-              >
-                Day 3
-              </Typography>
-            </Grid>
-            {[1, 2].map(card => (
-              <Grid item key={card} style={{ paddingBottom: "10%" }}>
-                <GroupCard />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-      </footer>
-      {/* End footer */}
-    </React.Fragment>
-  );
+            Something here to give the footer a purpose!
+          </Typography>
+        </footer>
+        {/* End footer */}
+      </React.Fragment>
+    );
+  }
 }
+
+const mapState = state => ({
+  groups: state.groups
+});
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+export default connect(mapState)(withStyles(styles)(Dashboard));

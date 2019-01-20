@@ -1,7 +1,7 @@
 "use strict";
 const db = require("../server/db");
 const { Students } = require("./data");
-const { Student, User } = require("../server/db/models");
+const { Student, User, Group, GroupedStudent } = require("../server/db/models");
 
 async function seed() {
   await db.sync({ force: true });
@@ -21,6 +21,135 @@ async function seed() {
   await Promise.all(students.map(student => student.addUser(users[0])));
   await Promise.all(students.map(student => student.addUser(users[1])));
   console.log(`seeded ${students.length} students`);
+
+  const group1 = await Group.create({ skill: "mainIdea", rating: 3 });
+  const group2 = await Group.create({ skill: "authorsPurpose", rating: 2 });
+  const group3 = await Group.create({ skill: "traitsEmotions", rating: 2 });
+  const group4 = await Group.create({ skill: "contextClues", rating: 1 });
+  const group5 = await Group.create({ skill: "pov", rating: 2 });
+
+  await Promise.all([
+    GroupedStudent.create({
+      groupId: group1.id,
+      studentId: 8,
+      currentRating: 3
+    }),
+    GroupedStudent.create({
+      groupId: group1.id,
+      studentId: 9,
+      currentRating: 3
+    }),
+    GroupedStudent.create({
+      groupId: group1.id,
+      studentId: 10,
+      currentRating: 3
+    }),
+    GroupedStudent.create({
+      groupId: group1.id,
+      studentId: 11,
+      currentRating: 3
+    })
+  ]);
+
+  await Promise.all([
+    GroupedStudent.create({
+      groupId: group2.id,
+      studentId: 8,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group2.id,
+      studentId: 9,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group2.id,
+      studentId: 10,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group2.id,
+      studentId: 11,
+      currentRating: 2
+    })
+  ]);
+
+  await Promise.all([
+    GroupedStudent.create({
+      groupId: group3.id,
+      studentId: 8,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group3.id,
+      studentId: 9,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group3.id,
+      studentId: 10,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group3.id,
+      studentId: 11,
+      currentRating: 2
+    })
+  ]);
+
+  await Promise.all([
+    GroupedStudent.create({
+      groupId: group4.id,
+      studentId: 8,
+      currentRating: 1
+    }),
+    GroupedStudent.create({
+      groupId: group4.id,
+      studentId: 9,
+      currentRating: 1
+    }),
+    GroupedStudent.create({
+      groupId: group4.id,
+      studentId: 10,
+      currentRating: 1
+    }),
+    GroupedStudent.create({
+      groupId: group4.id,
+      studentId: 11,
+      currentRating: 1
+    })
+  ]);
+
+  await Promise.all([
+    GroupedStudent.create({
+      groupId: group5.id,
+      studentId: 8,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group5.id,
+      studentId: 9,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group5.id,
+      studentId: 10,
+      currentRating: 2
+    }),
+    GroupedStudent.create({
+      groupId: group5.id,
+      studentId: 11,
+      currentRating: 2
+    })
+  ]);
+  await Group.addDate(2, "01/10");
+  await Group.addDate(2, "01/13");
+  await Group.addDate(3, "01/10");
+  await Group.addDate(4, "01/10");
+  await Group.addDate(4, "01/13");
+  await Group.addDate(4, "01/16");
+  await Group.addDate(5, "01/10");
+  await Group.addDate(5, "01/13");
 }
 
 // We've separated the `seed` function from the `runSeed` function.

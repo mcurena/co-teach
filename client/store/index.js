@@ -6,8 +6,15 @@ import user from "./user";
 import students from "./students";
 import skillFilter from "./skillFilter";
 import ratingFilter from "./ratingFilter";
+import groups from "./groups";
 
-const reducer = combineReducers({ user, students, skillFilter, ratingFilter });
+const reducer = combineReducers({
+  user,
+  students,
+  skillFilter,
+  ratingFilter,
+  groups
+});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
@@ -18,3 +25,4 @@ export * from "./user";
 export * from "./students";
 export * from "./skillFilter";
 export * from "./ratingFilter";
+export * from "./groups";

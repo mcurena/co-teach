@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { connect } from "react-redux";
-import { setSkillFilter } from "../store";
+import { setSkillFilter, clearSkillFilter } from "../store";
 
 const styles = theme => ({
   root: {
@@ -17,7 +17,7 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 150
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
@@ -44,6 +44,9 @@ class SimpleSelect extends React.Component {
     this.setState({
       chosen: event.target.value
     });
+    if (event.target.value === "none") {
+      this.props.clearSkillFilter();
+    }
   };
 
   render() {
@@ -63,17 +66,25 @@ class SimpleSelect extends React.Component {
           <Select
             value={this.state.chosen}
             onChange={this.handleChange}
+            style={{ fontSize: "10pt" }}
             input={
               <OutlinedInput
                 labelWidth={this.state.labelWidth}
                 name={this.props.filter}
                 id="outlined-age-simple"
+                style={{ fontSize: "10pt" }}
               />
             }
           >
-            <MenuItem value="none">None</MenuItem>
+            <MenuItem value="none" style={{ fontSize: "10pt" }}>
+              None
+            </MenuItem>
             {this.props.options.map(option => (
-              <MenuItem key={option} value={option}>
+              <MenuItem
+                key={option}
+                value={option}
+                style={{ fontSize: "10pt" }}
+              >
                 {option}
               </MenuItem>
             ))}
@@ -93,7 +104,8 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  setSkillFilter: filterInfo => dispatch(setSkillFilter(filterInfo))
+  setSkillFilter: filterInfo => dispatch(setSkillFilter(filterInfo)),
+  clearSkillFilter: () => dispatch(clearSkillFilter())
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(SimpleSelect));

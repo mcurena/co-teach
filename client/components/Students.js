@@ -72,7 +72,7 @@ class Students extends React.Component {
                     {skillFilter}
                   </TableCell>
                 ) : (
-                  Object.values(skills)
+                  Object.keys(skills)
                     .sort()
                     .map(skill => (
                       <TableCell key={skill} align="center">

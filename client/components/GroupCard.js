@@ -33,9 +33,6 @@ const styles = theme => ({
   expandOpen: {
     transform: "rotate(180deg)"
   },
-  avatar: {
-    backgroundColor: green[500]
-  },
   card: {
     height: "100%",
     display: "flex",
@@ -55,14 +52,39 @@ class GroupCard extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-
+    const { classes, group } = this.props;
+    const skills = {
+      "Author's Purpose": "authorsPurpose",
+      "Main Idea": "mainIdea",
+      "Traits & Emotions": "traitsEmotions",
+      "Figurative Language": "figurativeLanguage",
+      "Text Features": "textFeatures",
+      "Text Structures": "textStructures",
+      "Context Clues": "contextClues",
+      Theme: "theme",
+      "Point of View": "pov"
+    };
+    let skill;
+    for (let key in skills) {
+      if (skills[key] === group.skill) {
+        skill = key;
+      }
+    }
+    const colors = {
+      1: "red",
+      2: "pink",
+      3: "purple"
+    };
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="level" className={classes.avatar}>
-              2
+            <Avatar
+              aria-label="level"
+              className={classes.avatar}
+              style={{ backgroundColor: colors[group.rating] }}
+            >
+              {group.rating}
             </Avatar>
           }
           action={
@@ -70,13 +92,15 @@ class GroupCard extends React.Component {
               <i className="material-icons">assignment_ind</i>
             </IconButton>
           }
-          title="Cause and Effect"
-          subheader="01/16/2019"
+          title={skill}
+          subheader={group.dates ? group.dates[0] : ""}
         />
 
         <CardContent>
           <center>
-            <Typography component="p">Michelle, Angel, Salmon, Tuna</Typography>
+            <Typography component="p">
+              {group.students.map(student => student.name).join(", ")}
+            </Typography>
           </center>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
@@ -102,9 +126,11 @@ class GroupCard extends React.Component {
             <center>
               <Typography paragraph>Dates:</Typography>
             </center>
-            <Typography paragraph>January 3rd, January 7th</Typography>
+            <Typography paragraph>
+              {group.dates ? group.dates.join(", ") : ""}
+            </Typography>
             <center>
-              <Typography paragraph>Notes</Typography>
+              <Typography paragraph>Notes:</Typography>
             </center>
             <Typography paragraph>Blah blah</Typography>
           </CardContent>

@@ -17,7 +17,7 @@ import { logout } from "../store";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { loadStudents } from "../store";
+import { loadStudents, loadGroups } from "../store";
 
 const drawerWidth = 240;
 
@@ -105,6 +105,7 @@ class Navbar extends React.Component {
 
   async componentDidMount() {
     await this.props.loadStudents();
+    await this.props.loadGroups();
   }
 
   handleDrawerOpen = () => {
@@ -215,7 +216,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout()),
-  loadStudents: () => dispatch(loadStudents())
+  loadStudents: () => dispatch(loadStudents()),
+  loadGroups: () => dispatch(loadGroups())
 });
 
 export default withRouter(
