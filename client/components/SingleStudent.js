@@ -24,9 +24,9 @@ const styles = {
   }
 };
 
-class SingleStudent extends React.Component(props) {
+class SingleStudent extends React.Component {
   render() {
-    const { classes } = props;
+    const { classes } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
 
     return (
@@ -63,8 +63,8 @@ class SingleStudent extends React.Component(props) {
   }
 }
 
-SimpleCard.propTypes = {
+SingleStudent.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(SingleStudent);

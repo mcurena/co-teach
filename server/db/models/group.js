@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const Student = require("./student");
 const GroupedStudent = require("./groupedStudent");
+const User = require("./user");
 
 const Group = db.define("group", {
   skill: {
@@ -20,10 +21,12 @@ const Group = db.define("group", {
     }
   },
   dates: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.STRING,
+    defaultValue: "Pending"
   },
   notes: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
+    type: Sequelize.STRING,
+    defaultValue: "None"
   },
   active: {
     type: Sequelize.BOOLEAN,
@@ -33,12 +36,8 @@ const Group = db.define("group", {
 
 Group.createNew = async function(ids, skill, rating) {
   const groupInstance = await Group.create({ skill, rating });
-  const students = await Promise.all(
-    ids.map(id => {
-      Student.findById(id);
-    })
-  );
-  const newGroup = await Promise.all(
+  const students = await Promise.all(ids.map(id => Student.findById(id)));
+  await Promise.all(
     students.map(student => {
       GroupedStudent.create({
         groupId: groupInstance.id,
@@ -47,30 +46,48 @@ Group.createNew = async function(ids, skill, rating) {
       });
     })
   );
-  return newGroup;
+  await Promise.all(
+    students.map(student =>
+      student.update({
+        currentlyPlaced: true
+      })
+    )
+  );
+  return groupInstance;
 };
 
 Group.addDate = async function(id, date) {
   const group = await Group.findById(id);
-  let dates;
-  if (group.dates) {
-    dates = group.dates.concat([date]);
+  if (group.dates === "Pending") {
+    await group.update({ dates: date });
   } else {
-    dates = [date];
+    const updated = `${group.dates}, ${date}`;
+    await group.update({ dates: updated });
   }
-
-  await group.update({ dates });
-  return group;
 };
 
 Group.addNote = async function(id, note) {
-  const group = await Group.findById(id);
-  await group.update({ notes: [...group.notes, note] });
+  const group = await Group.findById(id, {
+    include: [{ model: Student }, { model: User }]
+  });
+  if (group.notes === "None") {
+    await group.update({ notes: note });
+  } else {
+    const updated = `${group.notes} - ${note}`;
+    await group.update({ notes: updated });
+  }
+
   return group;
 };
 
 Group.complete = async function(id) {
-  const group = await Group.findById(id);
+  const group = await Group.findById(id, { include: Student });
+  const students = await Promise.all(
+    group.students.map(student => Student.findById(student.id))
+  );
+  await Promise.all(
+    students.map(student => student.update({ currentlyPlaced: false }))
+  );
   await group.update({ active: false });
   return group;
 };

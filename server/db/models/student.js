@@ -48,6 +48,10 @@ const Student = db.define("student", {
   pov: {
     type: Sequelize.STRING,
     defaultValue: "Not rated"
+  },
+  currentlyPlaced: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 

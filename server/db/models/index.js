@@ -8,6 +8,7 @@ Student.belongsToMany(Group, { through: GroupedStudent });
 Group.belongsToMany(Student, { through: GroupedStudent });
 Student.belongsToMany(User, { through: TeachNStudent });
 User.belongsToMany(Student, { through: TeachNStudent });
+Group.belongsTo(User);
 
 module.exports = {
   User,

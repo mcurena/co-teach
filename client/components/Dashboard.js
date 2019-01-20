@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
                 </Typography>
               </Grid>
               {groups.map(group => {
-                if (!group.dates) {
+                if (group.dates === "Pending") {
                   return (
                     <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
                       <GroupCard group={group} />
@@ -91,7 +91,7 @@ class Dashboard extends React.Component {
                 </Typography>
               </Grid>
               {groups.map(group => {
-                if (group.dates && group.dates.length === 1) {
+                if (group.dates.length === 5) {
                   return (
                     <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
                       <GroupCard group={group} />
@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
                 </Typography>
               </Grid>
               {groups.map(group => {
-                if (group.dates && group.dates.length === 2) {
+                if (group.dates.length === 12) {
                   return (
                     <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
                       <GroupCard group={group} />
@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
                 </Typography>
               </Grid>
               {groups.map(group => {
-                if (group.dates && group.dates.length === 3) {
+                if (group.dates.length === 19) {
                   return (
                     <Grid item key={group.id} style={{ paddingBottom: "10%" }}>
                       <GroupCard group={group} />

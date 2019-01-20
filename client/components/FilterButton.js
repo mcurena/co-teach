@@ -8,7 +8,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { connect } from "react-redux";
-import { setSkillFilter, clearSkillFilter } from "../store";
+import {
+  setSkillFilter,
+  clearSkillFilter,
+  setActiveFilter,
+  clearActiveFilter
+} from "../store";
 
 const styles = theme => ({
   root: {
@@ -39,13 +44,19 @@ class SimpleSelect extends React.Component {
   handleChange = event => {
     if (this.props.filter === "Skills") {
       this.props.setSkillFilter(event.target.value);
+    } else if (this.props.filter === "Active") {
+      this.props.setActiveFilter(event.target.value);
     }
 
     this.setState({
       chosen: event.target.value
     });
     if (event.target.value === "none") {
-      this.props.clearSkillFilter();
+      if (this.props.filter === "Skills") {
+        this.props.clearSkillFilter();
+      } else if (this.props.filter === "Active") {
+        this.props.clearActiveFilter();
+      }
     }
   };
 
@@ -99,13 +110,11 @@ SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapState = state => ({
-  stateFilter: state.filter
-});
-
 const mapDispatch = dispatch => ({
   setSkillFilter: filterInfo => dispatch(setSkillFilter(filterInfo)),
-  clearSkillFilter: () => dispatch(clearSkillFilter())
+  clearSkillFilter: () => dispatch(clearSkillFilter()),
+  setActiveFilter: filterInfo => dispatch(setActiveFilter(filterInfo)),
+  clearActiveFilter: () => dispatch(clearActiveFilter())
 });
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(SimpleSelect));
+export default connect(null, mapDispatch)(withStyles(styles)(SimpleSelect));

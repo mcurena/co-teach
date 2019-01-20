@@ -10,6 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FilterButton from "./FilterButton";
 import { Link } from "react-router-dom";
+import { clearSkillFilter } from "../store";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -27,106 +29,120 @@ const styles = theme => ({
   }
 });
 
-const rows = [
-  {
-    id: 1,
-    students: ["Michelle", "Angel", "Salmon", "Tuna"],
-    skill: "Main Idea",
-    rating: 2,
-    dates: ["01/03", "01/04"],
-    notes: ["Interests: Sharks and Harry Potter", "Shared text: Naomi Leon"],
-    active: true
-  },
-  {
-    id: 2,
-    students: ["Angel", "Salmon", "Tuna"],
-    skill: "Context Clues",
-    rating: 3,
-    dates: ["01/03", "01/04"],
-    notes: ["Interests: Sharks and Harry Potter", "Shared text: Naomi Leon"],
-    active: true
-  },
-  {
-    id: 3,
-    students: ["Michelle", "Angel", "Salmon"],
-    skill: "Inferences",
-    rating: 2,
-    dates: ["01/03", "01/04"],
-    notes: ["Interests: Sharks and Harry Potter", "Shared text: Naomi Leon"],
-    active: false
-  },
-  {
-    id: 4,
-    students: ["Michelle", "Angel", "Tuna"],
-    skill: "Decoding",
-    rating: 1,
-    dates: ["01/03", "01/04"],
-    notes: ["Interests: Sharks and Harry Potter", "Shared text: Naomi Leon"],
-    active: false
+class Groups extends React.Component {
+  componentWillUnmount() {
+    this.props.clearSkillFilter();
   }
-];
 
-function Groups(props) {
-  const { classes } = props;
+  render() {
+    const { classes, skillFilter, groups } = this.props;
+    const skills = {
+      "Author's Purpose": "authorsPurpose",
+      "Main Idea": "mainIdea",
+      "Traits & Emotions": "traitsEmotions",
+      "Figurative Language": "figurativeLanguage",
+      "Text Features": "textFeatures",
+      "Text Structures": "textStructures",
+      "Context Clues": "contextClues",
+      Theme: "theme",
+      "Point of View": "pov"
+    };
 
-  return (
-    <div>
-      <div className={classes.filters}>
-        <Typography component="h4">Filter By: </Typography>
-        <FilterButton
-          filter="Skills"
-          options={[
-            "Main Idea",
-            "Cause & Effect",
-            "Inference",
-            "Context Clues"
-          ]}
-        />
-        <FilterButton filter="Rating" options={[1, 2, 3, 4]} />
-      </div>
+    return (
+      <div>
+        <div className={classes.filters}>
+          <Typography component="h4">Filter By: </Typography>
+          <FilterButton filter="Skills" options={Object.keys(skills).sort()} />
+        </div>
 
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Group #</TableCell>
-              <TableCell align="center">Students</TableCell>
-              <TableCell align="center">Skill</TableCell>
-              <TableCell align="center">Rating</TableCell>
-              <TableCell align="center">Active?</TableCell>
-              <TableCell align="center">Dates</TableCell>
-              <TableCell align="center">Notes</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(group => (
-              <TableRow key={group.id}>
-                <TableCell align="center">
-                  <Link to={`/groups/${group.id}`}>{group.id}</Link>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {group.students.sort().join(", ")}
-                </TableCell>
-                <TableCell align="center">{group.skill}</TableCell>
-                <TableCell align="center">{group.rating}</TableCell>
-                <TableCell align="center">
-                  {group.active ? "Active" : "Completed"}
-                </TableCell>
-                <TableCell align="center">{group.dates.join(" - ")}</TableCell>
-                <TableCell component="th" scope="row">
-                  {group.notes.join(" - ")}
-                </TableCell>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Group #</TableCell>
+                <TableCell align="center">Students</TableCell>
+                <TableCell align="center">Skill</TableCell>
+                <TableCell align="center">Rating</TableCell>
+                <TableCell align="center">Active?</TableCell>
+                <TableCell align="center">Dates</TableCell>
+                <TableCell align="center">Notes</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    </div>
-  );
+            </TableHead>
+            <TableBody>
+              {skillFilter
+                ? groups
+                    .filter(group => group.skill === skills[skillFilter])
+                    .map(group => (
+                      <TableRow key={group.id}>
+                        <TableCell align="center">
+                          <Link to={`/groups/${group.id}`}>{group.id}</Link>
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {group.students
+                            .reduce((accum, student) => {
+                              return accum.concat([student.name]);
+                            }, [])
+                            .sort()
+                            .join(", ")}
+                        </TableCell>
+                        <TableCell align="center">{skillFilter}</TableCell>
+                        <TableCell align="center">{group.rating}</TableCell>
+                        <TableCell align="center">
+                          {group.active ? "Active" : "Completed"}
+                        </TableCell>
+                        <TableCell align="center">{group.dates}</TableCell>
+                        <TableCell component="th" scope="row">
+                          {group.notes}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                : groups.map(group => (
+                    <TableRow key={group.id}>
+                      <TableCell align="center">
+                        <Link to={`/groups/${group.id}`}>{group.id}</Link>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {group.students
+                          .reduce((accum, student) => {
+                            return accum.concat([student.name]);
+                          }, [])
+                          .sort()
+                          .join(", ")}
+                      </TableCell>
+                      <TableCell align="center">
+                        {Object.keys(skills).find(
+                          key => skills[key] === group.skill
+                        )}
+                      </TableCell>
+                      <TableCell align="center">{group.rating}</TableCell>
+                      <TableCell align="center">
+                        {group.active ? "Active" : "Completed"}
+                      </TableCell>
+                      <TableCell align="center">{group.dates}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {group.notes}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
+    );
+  }
 }
 
 Groups.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Groups);
+const mapState = state => ({
+  groups: state.groups,
+  skillFilter: state.skillFilter
+});
+
+const mapDispatch = dispatch => ({
+  clearSkillFilter: () => dispatch(clearSkillFilter())
+});
+
+export default connect(mapState, mapDispatch)(withStyles(styles)(Groups));
