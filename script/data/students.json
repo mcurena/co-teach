@@ -6,6 +6,8 @@
       "authorsPurpose": "2",
       "mainIdea": "2",
       "traitsEmotions": "1",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "3",
       "pov": "2"
     },
@@ -15,6 +17,8 @@
       "authorsPurpose": "3",
       "mainIdea": "2",
       "traitsEmotions": "3",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "3",
       "pov": "2"
     },
@@ -24,6 +28,8 @@
       "authorsPurpose": "2",
       "mainIdea": "3",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
       "pov": "2"
     },
@@ -34,6 +40,8 @@
       "mainIdea": "1",
       "traitsEmotions": "2",
       "contextClues": "1",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "pov": "1"
     },
     {
@@ -42,6 +50,8 @@
       "authorsPurpose": "2",
       "mainIdea": "2",
       "traitsEmotions": "1",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "3",
       "pov": "2"
     },
@@ -51,6 +61,8 @@
       "authorsPurpose": "3",
       "mainIdea": "2",
       "traitsEmotions": "3",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "3",
       "pov": "2"
     },
@@ -60,6 +72,8 @@
       "authorsPurpose": "2",
       "mainIdea": "1",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
       "pov": "1"
     },
@@ -69,6 +83,8 @@
       "authorsPurpose": "2",
       "mainIdea": "3",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
       "pov": "2"
     },
@@ -78,6 +94,8 @@
       "authorsPurpose": "2",
       "mainIdea": "3",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
       "pov": "2"
     },
@@ -87,6 +105,8 @@
       "authorsPurpose": "2",
       "mainIdea": "3",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
       "pov": "2"
     },
@@ -96,7 +116,174 @@
       "authorsPurpose": "2",
       "mainIdea": "3",
       "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
       "contextClues": "1",
+      "pov": "2"
+    },
+    {
+      "name": "Steven Vargas",
+      "level": "S",
+      "authorsPurpose": "2",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "2",
+      "textStructures": "2",
+      "contextClues": "1",
+      "pov": "2"
+    },
+    {
+      "name": "Lucas Fernandez",
+      "level": "K",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Evalina Fernandez",
+      "level": "K",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Yonuel Fernandez",
+      "level": "Y",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Dulce Ureña",
+      "level": "R",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Erica Fernandez",
+      "level": "K",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Ramiro Coronel",
+      "level": "K",
+      "authorsPurpose": "2",
+      "mainIdea": "2",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "1",
+      "contextClues": "1",
+      "pov": "1"
+    },
+    {
+      "name": "Nelly Moya",
+      "level": "P",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Olga Novoa",
+      "level": "P",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Isabel Hilario",
+      "level": "P",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Manuela Amaya",
+      "level": "T",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Edwin Amaya",
+      "level": "O",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Mason Amaya",
+      "level": "G",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Samantha Berezow",
+      "level": "R",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
+      "pov": "2"
+    },
+    {
+      "name": "Hiromi Palmero",
+      "level": "O",
+      "authorsPurpose": "3",
+      "mainIdea": "3",
+      "traitsEmotions": "2",
+      "figurativeLanguage": "1",
+      "textStructures": "3",
+      "contextClues": "3",
       "pov": "2"
     }
   ]

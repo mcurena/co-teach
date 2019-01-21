@@ -13,11 +13,10 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./NavListItems";
-import { logout } from "../store";
+import { logout, loadStudents, loadGroups, loadObservations } from "../store";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { loadStudents, loadGroups } from "../store";
 
 const drawerWidth = 240;
 
@@ -106,6 +105,7 @@ class Navbar extends React.Component {
   async componentDidMount() {
     await this.props.loadStudents();
     await this.props.loadGroups();
+    await this.props.loadObservations();
   }
 
   handleDrawerOpen = () => {
@@ -199,6 +199,7 @@ class Navbar extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
+
           <View />
         </main>
       </div>
@@ -217,7 +218,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout()),
   loadStudents: () => dispatch(loadStudents()),
-  loadGroups: () => dispatch(loadGroups())
+  loadGroups: () => dispatch(loadGroups()),
+  loadObservations: () => dispatch(loadObservations())
 });
 
 export default withRouter(

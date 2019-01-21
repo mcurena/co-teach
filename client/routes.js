@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Login, Dashboard, Students, Groups } from "./components";
+import {
+  Login,
+  Dashboard,
+  Students,
+  Groups,
+  SingleStudent,
+  AddNote,
+  AddMultipleNotes
+} from "./components";
 import { me } from "./store";
 
 /**
@@ -22,6 +30,9 @@ class Routes extends Component {
 
         {isLoggedIn && (
           <Switch>
+            <Route path="/add" component={AddNote} />
+            <Route path="/groupAdd" component={AddMultipleNotes} />
+            <Route path="/students/:id" component={SingleStudent} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/students" component={Students} />
             <Route path="/groups" component={Groups} />

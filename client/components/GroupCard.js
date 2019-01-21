@@ -12,8 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AddGroupNote from "./AddGroupNote";
-import Badge from "@material-ui/core/Badge";
+import { AddGroupNote, AssignUser } from "../components";
 
 const styles = theme => ({
   media: {
@@ -78,7 +77,6 @@ class GroupCard extends React.Component {
       2: "pink",
       3: "purple"
     };
-    const badge = group.user.name ? group.user.name.slice(0, 1) : "";
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -91,17 +89,7 @@ class GroupCard extends React.Component {
               {group.rating}
             </Avatar>
           }
-          action={
-            <IconButton>
-              <Badge
-                className={classes.margin}
-                badgeContent={badge}
-                color="primary"
-              >
-                <i className="material-icons">assignment_ind</i>
-              </Badge>
-            </IconButton>
-          }
+          action={<AssignUser group={group} />}
           title={skill}
           subheader={
             group.dates === "Pending" ? group.dates : group.dates.slice(0, 5)

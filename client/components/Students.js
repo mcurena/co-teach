@@ -32,6 +32,7 @@ const styles = theme => ({
 class Students extends React.Component {
   componentWillUnmount() {
     this.props.clearSkillFilter();
+    this.props.clearActiveFilter();
   }
 
   render() {

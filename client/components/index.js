@@ -12,3 +12,8 @@ export { default as Students } from "./Students";
 export { default as FilterButton } from "./FilterButton";
 export { default as Groups } from "./Groups";
 export { default as Unauthorized } from "./Unauthorized";
+export { default as SingleStudent } from "./SingleStudent";
+export { default as AddNote } from "./AddNote";
+export { default as AssignUser } from "./AssignUser";
+export { default as AddGroupNote } from "./AddGroupNote";
+export { default as AddMultipleNotes } from "./AddMultipleNotes";

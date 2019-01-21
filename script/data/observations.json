@@ -1,0 +1,202 @@
+{
+  "items": [
+    {
+      "skill": "mainIdea",
+      "rating": "3",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 1
+    },
+    {
+      "skill": "mainIdea",
+      "rating": "3",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 2
+    },
+    {
+      "skill": "mainIdea",
+      "rating": "3",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 3
+    },
+    {
+      "skill": "mainIdea",
+      "rating": "3",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 4
+    },
+    {
+      "skill": "authorsPurpose",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 5
+    },
+    {
+      "skill": "authorsPurpose",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 6
+    },
+    {
+      "skill": "authorsPurpose",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 7
+    },
+    {
+      "skill": "authorsPurpose",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 8
+    },
+    {
+      "skill": "traitsEmotions",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 9
+    },
+    {
+      "skill": "traitsEmotions",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 10
+    },
+    {
+      "skill": "traitsEmotions",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 11
+    },
+    {
+      "skill": "traitsEmotions",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 12
+    },
+    {
+      "skill": "pov",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 13
+    },
+    {
+      "skill": "pov",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 14
+    },
+    {
+      "skill": "pov",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 15
+    },
+    {
+      "skill": "pov",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 16
+    },
+    {
+      "skill": "contextClues",
+      "rating": "1",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 17
+    },
+    {
+      "skill": "contextClues",
+      "rating": "1",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 18
+    },
+    {
+      "skill": "contextClues",
+      "rating": "1",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 19
+    },
+    {
+      "skill": "contextClues",
+      "rating": "1",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 20
+    },
+    {
+      "skill": "contextClues",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 1
+    },
+    {
+      "skill": "authorsPurpose",
+      "rating": "2",
+      "date": "01/03",
+      "method": "Individual",
+      "note": "Observed during DEAR time",
+      "user": 2,
+      "student": 1
+    }
+  ]
+}

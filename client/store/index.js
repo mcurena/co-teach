@@ -8,6 +8,7 @@ import skillFilter from "./skillFilter";
 import ratingFilter from "./ratingFilter";
 import groups from "./groups";
 import activeFilter from "./activeFilter";
+import observations from "./observations";
 
 const reducer = combineReducers({
   user,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   skillFilter,
   ratingFilter,
   groups,
-  activeFilter
+  activeFilter,
+  observations
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -29,3 +31,4 @@ export * from "./skillFilter";
 export * from "./ratingFilter";
 export * from "./groups";
 export * from "./activeFilter";
+export * from "./observations";

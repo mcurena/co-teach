@@ -36,12 +36,14 @@ export const mainListItems = (
         <ListItemText primary="Groups" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
-      <ListItemText primary="Add Notes" />
-    </ListItem>
+    <Link to="/add">
+      <ListItem button>
+        <ListItemIcon>
+          <AddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Add Notes" />
+      </ListItem>
+    </Link>
   </div>
 );
 

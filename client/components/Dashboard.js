@@ -154,7 +154,7 @@ class Dashboard extends React.Component {
         </main>
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>
-            Footer
+            Created by Michelle Ureña
           </Typography>
           <Typography
             variant="subtitle1"
@@ -162,7 +162,7 @@ class Dashboard extends React.Component {
             color="textSecondary"
             component="p"
           >
-            Something here to give the footer a purpose!
+            Links?
           </Typography>
         </footer>
         {/* End footer */}

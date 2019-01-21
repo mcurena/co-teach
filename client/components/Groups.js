@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FilterButton from "./FilterButton";
 import { Link } from "react-router-dom";
-import { clearSkillFilter } from "../store";
+import { clearSkillFilter, clearActiveFilter } from "../store";
 import { connect } from "react-redux";
 
 const styles = theme => ({
@@ -32,10 +32,11 @@ const styles = theme => ({
 class Groups extends React.Component {
   componentWillUnmount() {
     this.props.clearSkillFilter();
+    this.props.clearActiveFilter();
   }
 
   render() {
-    const { classes, skillFilter, groups } = this.props;
+    const { classes, skillFilter, groups, activeFilter } = this.props;
     const skills = {
       "Author's Purpose": "authorsPurpose",
       "Main Idea": "mainIdea",
@@ -47,12 +48,20 @@ class Groups extends React.Component {
       Theme: "theme",
       "Point of View": "pov"
     };
-
+    let filteredGroups = groups;
+    if (activeFilter.length) {
+      if (activeFilter === "Yes") {
+        filteredGroups = groups.filter(group => group.active);
+      } else {
+        filteredGroups = groups.filter(group => !group.active);
+      }
+    }
     return (
       <div>
         <div className={classes.filters}>
           <Typography component="h4">Filter By: </Typography>
           <FilterButton filter="Skills" options={Object.keys(skills).sort()} />
+          <FilterButton filter="Active" options={["Yes", "No"]} />
         </div>
 
         <Paper className={classes.root}>
@@ -70,19 +79,21 @@ class Groups extends React.Component {
             </TableHead>
             <TableBody>
               {skillFilter
-                ? groups
+                ? filteredGroups
                     .filter(group => group.skill === skills[skillFilter])
                     .map(group => (
                       <TableRow key={group.id}>
-                        <TableCell align="center">
-                          <Link to={`/groups/${group.id}`}>{group.id}</Link>
-                        </TableCell>
+                        <TableCell align="center">{group.id}</TableCell>
                         <TableCell component="th" scope="row">
                           {group.students
-                            .reduce((accum, student) => {
-                              return accum.concat([student.name]);
-                            }, [])
-                            .sort()
+                            .sort((a, b) => {
+                              const keyA = a.name;
+                              const keyB = b.name;
+                              if (keyA < keyB) return -1;
+                              if (keyA > keyB) return 1;
+                              return 0;
+                            })
+                            .map(student => student.name)
                             .join(", ")}
                         </TableCell>
                         <TableCell align="center">{skillFilter}</TableCell>
@@ -96,7 +107,7 @@ class Groups extends React.Component {
                         </TableCell>
                       </TableRow>
                     ))
-                : groups.map(group => (
+                : filteredGroups.map(group => (
                     <TableRow key={group.id}>
                       <TableCell align="center">
                         <Link to={`/groups/${group.id}`}>{group.id}</Link>
@@ -138,11 +149,13 @@ Groups.propTypes = {
 
 const mapState = state => ({
   groups: state.groups,
-  skillFilter: state.skillFilter
+  skillFilter: state.skillFilter,
+  activeFilter: state.activeFilter
 });
 
 const mapDispatch = dispatch => ({
-  clearSkillFilter: () => dispatch(clearSkillFilter())
+  clearSkillFilter: () => dispatch(clearSkillFilter()),
+  clearActiveFilter: () => dispatch(clearActiveFilter())
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Groups));
