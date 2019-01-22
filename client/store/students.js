@@ -3,6 +3,7 @@ import socket from "../socket";
 
 const GET_STUDENTS = "GET_STUDENTS";
 const UPDATE_STUDENTS = "UPDATE_STUDENTS";
+const ADD_RATING = "ADD_RATING";
 
 const defaultStudents = [];
 
@@ -11,6 +12,11 @@ const getStudents = students => ({ type: GET_STUDENTS, students });
 export const update = ids => ({
   type: UPDATE_STUDENTS,
   ids
+});
+
+export const addRating = student => ({
+  type: ADD_RATING,
+  student
 });
 
 export const loadStudents = () => async dispatch => {
@@ -45,6 +51,14 @@ export default function(state = [], action) {
       return action.students;
     case UPDATE_STUDENTS:
       return oldStudents.concat(updatedStudents);
+    case ADD_RATING:
+      return students.map(student => {
+        if (student.id === action.student.id) {
+          return action.student;
+        } else {
+          return student;
+        }
+      });
     default:
       return state;
   }

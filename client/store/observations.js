@@ -1,5 +1,6 @@
 import axios from "axios";
 import socket from "../socket";
+import { addRating } from "./students";
 
 const GET_OBSERVATIONS = "GET_OBSERVATIONS";
 const ADD_OBSERVATION = "ADD_OBSERVATION";
@@ -23,7 +24,8 @@ export const loadObservations = () => async dispatch => {
 
 export const addObservationServer = info => async dispatch => {
   const { data } = await axios.post("/api/observations/add", info);
-  dispatch(addObservation(data || {}));
+  dispatch(addObservation(data[0] || {}));
+  dispatch(addRating(data[1] || {}));
   socket.emit("add-observation", data);
 };
 

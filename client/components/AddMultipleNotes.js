@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { addObservationServer, addDateServer } from "../store";
+import {
+  addObservationServer,
+  addDateServer,
+  groupCreatedServer
+} from "../store";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -260,7 +264,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   addObservationServer: info => dispatch(addObservationServer(info)),
-  addDateServer: (id, date) => dispatch(addDateServer(id, date))
+  addDateServer: (id, date) => dispatch(addDateServer(id, date)),
+  groupCreatedServer: (ids, skill, rating) =>
+    dispatch(groupCreatedServer(ids, skill, rating))
 });
 
 export default connect(mapState, mapDispatch)(

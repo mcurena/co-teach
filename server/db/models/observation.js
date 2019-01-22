@@ -51,7 +51,7 @@ Observation.createNew = async function(info) {
   }
   const studentInstance = await Student.findById(student);
   studentInstance.update({ [skill]: rating });
-  return obs;
+  return [obs, studentInstance];
 };
 
 module.exports = Observation;

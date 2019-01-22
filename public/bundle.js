@@ -385,10 +385,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var styles = function styles(theme) {
   return {
     container: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      width: "80vw"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '80vw'
     },
     textField: {
       marginLeft: theme.spacing.unit,
@@ -423,8 +423,8 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
       justAdded: false,
-      chosenGroup: "",
-      groupId: ""
+      chosenGroup: '',
+      groupId: ''
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleChange", function (name) {
@@ -463,14 +463,14 @@ function (_React$Component) {
                 mm = today.getMonth() + 1;
 
                 if (dd < 10) {
-                  dd = "0" + dd;
+                  dd = '0' + dd;
                 }
 
                 if (mm < 10) {
-                  mm = "0" + mm;
+                  mm = '0' + mm;
                 }
 
-                date = mm + "/" + dd;
+                date = mm + '/' + dd;
                 _context.next = 8;
                 return this.props.addDateServer(this.state.groupId, date);
 
@@ -481,8 +481,8 @@ function (_React$Component) {
               case 10:
                 this.setState({
                   justAdded: true,
-                  chosenGroup: "",
-                  groupId: ""
+                  chosenGroup: '',
+                  groupId: ''
                 });
 
               case 11:
@@ -520,7 +520,7 @@ function (_React$Component) {
                 availableStudents = this.props.students.filter(function (student) {
                   return !student.currentlyPlaced;
                 });
-                nonos = ["id", "level", "name", "currentlyPlaced", "createdAt", "updatedAt", "teachNStudent"];
+                nonos = ['id', 'level', 'name', 'currentlyPlaced', 'createdAt', 'updatedAt', 'teachNStudent'];
                 potentialGroups = {};
                 availableStudents.forEach(function (student) {
                   for (var key in student) {
@@ -531,7 +531,7 @@ function (_React$Component) {
                           2: [],
                           3: [],
                           4: [],
-                          "Not rated": []
+                          'Not rated': []
                         };
                         potentialGroups[key][student[key]].push(student.id);
                       } else {
@@ -545,7 +545,7 @@ function (_React$Component) {
                 for (skill in potentialGroups) {
                   if (potentialGroups.hasOwnProperty(skill)) {
                     for (rating in potentialGroups[skill]) {
-                      if (potentialGroups[skill].hasOwnProperty(rating) && rating !== "Not rated") {
+                      if (potentialGroups[skill].hasOwnProperty(rating) && rating !== 'Not rated') {
                         if (potentialGroups[skill][rating].length > 3) {
                           newGroup = {
                             ids: potentialGroups[skill][rating].slice(0, 4),
@@ -564,7 +564,7 @@ function (_React$Component) {
                   break;
                 }
 
-                return _context2.abrupt("return", "");
+                return _context2.abrupt("return", '');
 
               case 10:
                 _context2.next = 12;
@@ -599,14 +599,14 @@ function (_React$Component) {
           user = _this$props.user;
       var skills = {
         authorsPurpose: "Author's Purpose",
-        mainIdea: "Main Idea",
-        traitsEmotions: "Traits & Emotions",
-        figurativeLanguage: "Figurative Language",
-        textFeatures: "Text Features",
-        textStructures: "Text Structures",
-        contextClues: "Context Clues",
-        theme: "Theme",
-        pov: "Point of View"
+        mainIdea: 'Main Idea',
+        traitsEmotions: 'Traits & Emotions',
+        figurativeLanguage: 'Figurative Language',
+        textFeatures: 'Text Features',
+        textStructures: 'Text Structures',
+        contextClues: 'Context Clues',
+        theme: 'Theme',
+        pov: 'Point of View'
       };
       var _this$state = this.state,
           justAdded = _this$state.justAdded,
@@ -618,7 +618,7 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: classes.container
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, " ", justAdded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_9___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, ' ', justAdded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_9___default.a, {
         className: classes.container
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_7__["Typography"], null, "Thank you for your notes!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
         onClick: function onClick() {
@@ -658,9 +658,9 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           value: group.id,
           key: group.id
-        }, "Skill: ", skills[group.skill], " - Students:", " ", group.students.reduce(function (accum, student) {
+        }, "Skill: ", skills[group.skill], " - Students:", ' ', group.students.reduce(function (accum, student) {
           return accum.concat([student.name]);
-        }, []).join(", "));
+        }, []).join(', '));
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "none"
       }, "There are no groups assigned to you.")), chosenGroup ? chosenGroup.students.map(function (student) {
@@ -669,7 +669,7 @@ function (_React$Component) {
           student: student,
           key: student.name
         });
-      }) : "", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
+      }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
         onClick: function onClick() {
           return _this2.handleSubmit();
         }
@@ -699,6 +699,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     addDateServer: function addDateServer(id, date) {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["addDateServer"])(id, date));
+    },
+    groupCreatedServer: function groupCreatedServer(ids, skill, rating) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["groupCreatedServer"])(ids, skill, rating));
     }
   };
 };
@@ -2907,21 +2910,21 @@ var drawerWidth = 240;
 var styles = function styles(theme) {
   return {
     root: {
-      display: 'flex'
+      display: "flex"
     },
     toolbar: {
       paddingRight: 24 // keep right padding when drawer closed
 
     },
     toolbarIcon: _objectSpread({
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px'
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      padding: "0 8px"
     }, theme.mixins.toolbar),
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
+      transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       })
@@ -2929,7 +2932,7 @@ var styles = function styles(theme) {
     appBarShift: {
       marginLeft: drawerWidth,
       width: "calc(100% - ".concat(drawerWidth, "px)"),
-      transition: theme.transitions.create(['width', 'margin'], {
+      transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen
       })
@@ -2939,36 +2942,36 @@ var styles = function styles(theme) {
       marginRight: 36
     },
     menuButtonHidden: {
-      display: 'none'
+      display: "none"
     },
     title: {
       flexGrow: 1
     },
     drawerPaper: {
-      position: 'relative',
-      whiteSpace: 'nowrap',
+      position: "relative",
+      whiteSpace: "nowrap",
       width: drawerWidth,
-      transition: theme.transitions.create('width', {
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen
       })
     },
     drawerPaperClose: _defineProperty({
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
       width: theme.spacing.unit * 7
-    }, theme.breakpoints.up('sm'), {
+    }, theme.breakpoints.up("sm"), {
       width: theme.spacing.unit * 9
     }),
     appBarSpacer: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
-      height: '100vh',
-      overflow: 'auto'
+      height: "100vh",
+      overflow: "auto"
     },
     chartContainer: {
       marginLeft: -22
@@ -3072,7 +3075,7 @@ function (_React$Component) {
                 availableStudents = this.props.students.filter(function (student) {
                   return !student.currentlyPlaced;
                 });
-                nonos = ['id', 'level', 'name', 'currentlyPlaced', 'createdAt', 'updatedAt', 'teachNStudent'];
+                nonos = ["id", "level", "name", "currentlyPlaced", "createdAt", "updatedAt", "teachNStudent"];
                 potentialGroups = {};
                 availableStudents.forEach(function (student) {
                   for (var key in student) {
@@ -3083,7 +3086,7 @@ function (_React$Component) {
                           2: [],
                           3: [],
                           4: [],
-                          'Not rated': []
+                          "Not rated": []
                         };
                         potentialGroups[key][student[key]].push(student.id);
                       } else {
@@ -3097,7 +3100,7 @@ function (_React$Component) {
                 for (skill in potentialGroups) {
                   if (potentialGroups.hasOwnProperty(skill)) {
                     for (rating in potentialGroups[skill]) {
-                      if (potentialGroups[skill].hasOwnProperty(rating) && rating !== 'Not rated') {
+                      if (potentialGroups[skill].hasOwnProperty(rating) && rating !== "Not rated") {
                         if (potentialGroups[skill][rating].length > 3) {
                           newGroup = {
                             ids: potentialGroups[skill][rating].slice(0, 4),
@@ -3116,7 +3119,7 @@ function (_React$Component) {
                   break;
                 }
 
-                return _context2.abrupt("return", '');
+                return _context2.abrupt("return", "");
 
               case 10:
                 _context2.next = 12;
@@ -3168,7 +3171,7 @@ function (_React$Component) {
         className: "logo",
         src: "/apples.png",
         alt: "Co-Teach"
-      }), '  ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9___default.a, {
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9___default.a, {
         component: "h1",
         variant: "h6",
         color: "inherit",
@@ -3180,16 +3183,16 @@ function (_React$Component) {
         to: "/",
         onClick: handleClick,
         style: {
-          textDecoration: 'none',
-          color: '#FFF'
+          textDecoration: "none",
+          color: "#FFF"
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_18___default.a, {
         color: "inherit"
       }, "Logout")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_17__["Link"], {
         to: "/login",
         style: {
-          textDecoration: 'none',
-          color: '#FFF'
+          textDecoration: "none",
+          color: "#FFF"
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_18___default.a, {
         color: "inherit"
@@ -4764,7 +4767,7 @@ var groupCreatedServer = function groupCreatedServer(ids, skill, rating) {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, update, loadStudents, updateStudents, setSkillFilter, clearSkillFilter, setRatingFilter, clearRatingFilter, addGroupNote, assignUser, addDate, groupCreated, loadGroups, addGroupNoteServer, assignUserServer, addDateServer, groupCreatedServer, setActiveFilter, clearActiveFilter, getObservations, addObservation, loadObservations, addObservationServer */
+/*! exports provided: default, me, auth, logout, update, addRating, loadStudents, updateStudents, setSkillFilter, clearSkillFilter, setRatingFilter, clearRatingFilter, addGroupNote, assignUser, addDate, groupCreated, loadGroups, addGroupNoteServer, assignUserServer, addDateServer, groupCreatedServer, setActiveFilter, clearActiveFilter, getObservations, addObservation, loadObservations, addObservationServer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4789,6 +4792,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["logout"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "update", function() { return _students__WEBPACK_IMPORTED_MODULE_5__["update"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addRating", function() { return _students__WEBPACK_IMPORTED_MODULE_5__["addRating"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "loadStudents", function() { return _students__WEBPACK_IMPORTED_MODULE_5__["loadStudents"]; });
 
@@ -4883,6 +4888,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _socket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../socket */ "./client/socket.js");
+/* harmony import */ var _students__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./students */ "./client/store/students.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -4897,8 +4903,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var GET_OBSERVATIONS = "GET_OBSERVATIONS";
-var ADD_OBSERVATION = "ADD_OBSERVATION";
+
+var GET_OBSERVATIONS = 'GET_OBSERVATIONS';
+var ADD_OBSERVATION = 'ADD_OBSERVATION';
 var defaultObservations = [];
 var getObservations = function getObservations(observations) {
   return {
@@ -4926,7 +4933,7 @@ var loadObservations = function loadObservations() {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/observations");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/observations');
 
               case 2:
                 _ref2 = _context.sent;
@@ -4961,15 +4968,16 @@ var addObservationServer = function addObservationServer(info) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/observations/add", info);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/observations/add', info);
 
               case 2:
                 _ref4 = _context2.sent;
                 data = _ref4.data;
-                dispatch(addObservation(data || {}));
-                _socket__WEBPACK_IMPORTED_MODULE_1__["default"].emit("add-observation", data);
+                dispatch(addObservation(data[0] || {}));
+                dispatch(Object(_students__WEBPACK_IMPORTED_MODULE_2__["addRating"])(data[1] || {}));
+                _socket__WEBPACK_IMPORTED_MODULE_1__["default"].emit('add-observation', data);
 
-              case 6:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -5094,12 +5102,13 @@ var clearSkillFilter = function clearSkillFilter() {
 /*!**********************************!*\
   !*** ./client/store/students.js ***!
   \**********************************/
-/*! exports provided: update, loadStudents, updateStudents, default */
+/*! exports provided: update, addRating, loadStudents, updateStudents, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "update", function() { return update; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addRating", function() { return addRating; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadStudents", function() { return loadStudents; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateStudents", function() { return updateStudents; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -5119,8 +5128,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var GET_STUDENTS = "GET_STUDENTS";
-var UPDATE_STUDENTS = "UPDATE_STUDENTS";
+var GET_STUDENTS = 'GET_STUDENTS';
+var UPDATE_STUDENTS = 'UPDATE_STUDENTS';
+var ADD_RATING = 'ADD_RATING';
 var defaultStudents = [];
 
 var getStudents = function getStudents(students) {
@@ -5134,6 +5144,12 @@ var update = function update(ids) {
   return {
     type: UPDATE_STUDENTS,
     ids: ids
+  };
+};
+var addRating = function addRating(student) {
+  return {
+    type: ADD_RATING,
+    student: student
   };
 };
 var loadStudents = function loadStudents() {
@@ -5151,7 +5167,7 @@ var loadStudents = function loadStudents() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/students");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/students');
 
               case 3:
                 _ref2 = _context.sent;
@@ -5182,7 +5198,7 @@ var loadStudents = function loadStudents() {
 var updateStudents = function updateStudents(ids) {
   return function (dispatch) {
     dispatch(update(ids));
-    _socket__WEBPACK_IMPORTED_MODULE_1__["default"].emit("update-students", ids);
+    _socket__WEBPACK_IMPORTED_MODULE_1__["default"].emit('update-students', ids);
   };
 };
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -5212,6 +5228,15 @@ var updateStudents = function updateStudents(ids) {
 
     case UPDATE_STUDENTS:
       return oldStudents.concat(updatedStudents);
+
+    case ADD_RATING:
+      return students.map(function (student) {
+        if (student.id === action.student.id) {
+          return action.student;
+        } else {
+          return student;
+        }
+      });
 
     default:
       return state;
