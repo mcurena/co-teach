@@ -67,7 +67,7 @@ export const groupCreatedServer = (ids, skill, rating) => async dispatch => {
   socket.emit("group-created", data);
 };
 
-export default function(state = defaultGroups, action) {
+export default function(state = [], action) {
   const groups = [...state];
 
   switch (action.type) {

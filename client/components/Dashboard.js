@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   render() {
     const { classes, groups } = this.props;
 

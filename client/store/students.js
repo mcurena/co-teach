@@ -27,7 +27,7 @@ export const updateStudents = ids => dispatch => {
   socket.emit("update-students", ids);
 };
 
-export default function(state = defaultStudents, action) {
+export default function(state = [], action) {
   const students = [...state];
   let updatedStudents;
   let oldStudents;

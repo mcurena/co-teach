@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - node # uses most recent stable node version
+services:
+  - postgresql # starts up postgres
+addons:
+  postgresql: '9.6' # highest available postgres version on Travis
+dist: trusty # uses trusty environment
+sudo: false # when on trusty, uses Docker containers for speed
+notifications:
+  email:
+    on_success: change # default: change (only when going from broken to fixed)
+    on_failure: always # default: always (which is annoying, as it should be)
+install:
+  - npm ci # faster, goes only from package-lock
+# before_script:
+#   - psql -c 'create database "rat-saturn-gs-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: co-teach # see README
+  api_key:
+    secure: pm9kiFuUqzO45w+pIu8eAw9W/6+daa3+haUgLBHC6xnCjJRV9KyThQeSV2tSlCtiGSua4GEa0uV1XfBWpVJkD+9yAq1bLF338VTGiXmXP1M3ztFYnptIyFKKqFjU0/apGnIjjc431UZwV/oWcpUhte03Yjfwe9YKrsjeSSe1iyFkLmrAodMMgIEgaUe4nLhEbWvIoeBy8Azebu7i8Rbqh79g9h1lF12RqRbVig+dj2MTXFfnC8JGmqeGbImdWRHGuaCHj+t/j+VWMG0vdwWoHxXWlBbCa99w6dCSsA3Z7WCy+B0j+9gq4DqrAShXWgWq+WenBBDZRB738QUvS8K2wXIzs2ygmR82yQ5zlzh6NarmBvTEScxFqTgiJB9qQ9PjnAusdaMFJF+C5fnzH+xdM73/7uItqPq9gfN1Pvj7Zedd0ZlnpVIIMfHaE3u0NL6MOK/RoA8WFAOgSL/eXME5sxvRQMvNRjiK+ajlynuEkUBzBEQX4ZE0Xjmj+XcqKFUJjI9av1tgn8is+G/lLoxjkuYjL5UxN7qQWIgDHZ29a5mtxmT9noWGERjD+f1Ok4AKynLsGGgRbs1rj2fUzH1kNIUQmDt/AR0gR1US650HDTMtSG3iwNr7QcH3bXZg4CSTCB2g6aqmmj90iUgS29Paj7fNDzVibyR5QXSclSsX2Ko=
