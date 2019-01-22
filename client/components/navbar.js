@@ -231,13 +231,20 @@ class Navbar extends React.Component {
             </Typography>
             {isLoggedIn ? (
               <div>
-                <Link
-                  to="/"
-                  onClick={handleClick}
-                  style={{ textDecoration: "none", color: "#FFF" }}
-                >
-                  <Button color="inherit">Logout</Button>
-                </Link>
+                <center>
+                  <Typography component="h3">
+                    Welcome, {this.props.user.name}!
+                  </Typography>
+                </center>
+                <center>
+                  <Link
+                    to="/"
+                    onClick={handleClick}
+                    style={{ textDecoration: "none", color: "#FFF" }}
+                  >
+                    <Button color="inherit">Logout</Button>
+                  </Link>
+                </center>
               </div>
             ) : (
               <div>
@@ -286,7 +293,8 @@ Navbar.propTypes = {
 
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
-  students: state.students
+  students: state.students,
+  user: state.user
 });
 
 const mapDispatch = dispatch => ({
