@@ -75,7 +75,7 @@ class GroupCard extends React.Component {
     const colors = {
       1: "red",
       2: "pink",
-      3: "purple"
+      3: "orange"
     };
     return (
       <Card className={classes.card}>
@@ -105,9 +105,7 @@ class GroupCard extends React.Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <AddGroupNote group={group} />
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
+
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded

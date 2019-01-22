@@ -3,30 +3,33 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { addObservationServer } from "../store";
+import { addObservationServer, addDateServer } from "../store";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+import StudentNote from "./StudentNote";
 
 const styles = theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexDirection: "column",
+    alignItems: "center",
+    width: "80vw"
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16
+    marginTop: 0
   },
   menu: {
     width: 200
   }
 });
 
-class AddNote extends React.Component {
+class AddMultipleNotes extends React.Component {
   state = {
     justAdded: false,
     chosenGroup: "",
@@ -49,28 +52,7 @@ class AddNote extends React.Component {
     });
   };
 
-  async handleSubmit(evt) {
-    evt.preventDefault();
-    const student = this.props.students.find(
-      s => s.name === this.state.studentName
-    ).id;
-    let group = null;
-    let namesInGroup = this.props.groups.map(g => ({
-      id: g.id,
-      students: g.students.reduce((accum, s) => {
-        return accum.concat([s.name]);
-      }, []),
-      skill: g.skill
-    }));
-
-    if (this.state.method === "Group") {
-      group = namesInGroup.find(
-        g =>
-          g.skill === this.state.skill &&
-          g.students.includes(this.state.studentName)
-      ).id;
-    }
-
+  async handleSubmit() {
     const today = new Date();
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
@@ -81,25 +63,13 @@ class AddNote extends React.Component {
       mm = "0" + mm;
     }
 
-    const date = dd + "/" + mm;
-    await this.props.addObservationServer({
-      skill: this.state.skill,
-      rating: this.state.rating,
-      method: this.state.method,
-      note: this.state.note,
-      student,
-      user: this.props.user.id,
-      group,
-      date
-    });
-
+    const date = mm + "/" + dd;
+    await this.props.addDateServer(this.state.groupId, date);
+    await this.createGroup();
     this.setState({
       justAdded: true,
-      skill: "",
-      rating: "",
-      method: "",
-      note: "",
-      studentName: ""
+      chosenGroup: "",
+      groupId: ""
     });
   }
 
@@ -107,6 +77,71 @@ class AddNote extends React.Component {
     this.setState({
       justAdded: false
     });
+  }
+
+  async createGroup() {
+    const availableStudents = this.props.students.filter(
+      student => !student.currentlyPlaced
+    );
+    const nonos = [
+      "id",
+      "level",
+      "name",
+      "currentlyPlaced",
+      "createdAt",
+      "updatedAt",
+      "teachNStudent"
+    ];
+    let potentialGroups = {};
+    availableStudents.forEach(student => {
+      for (let key in student) {
+        if (!nonos.includes(key)) {
+          if (!potentialGroups[key]) {
+            potentialGroups[key] = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              "Not rated": []
+            };
+            potentialGroups[key][student[key]].push(student.id);
+          } else {
+            potentialGroups[key][student[key]].push(student.id);
+          }
+        }
+      }
+    });
+
+    const newGroups = [];
+    for (let skill in potentialGroups) {
+      if (potentialGroups.hasOwnProperty(skill)) {
+        for (let rating in potentialGroups[skill]) {
+          if (
+            potentialGroups[skill].hasOwnProperty(rating) &&
+            rating !== "Not rated"
+          ) {
+            if (potentialGroups[skill][rating].length > 3) {
+              const newGroup = {
+                ids: potentialGroups[skill][rating].slice(0, 4),
+                skill,
+                rating
+              };
+              newGroups.push(newGroup);
+            }
+          }
+        }
+      }
+    }
+    if (!newGroups.length) {
+      return "";
+    } else {
+      await this.props.groupCreatedServer(
+        newGroups[0].ids,
+        newGroups[0].skill,
+        newGroups[0].rating
+      );
+      await this.props.updateStudents(newGroups[0].ids);
+    }
   }
 
   render() {
@@ -128,82 +163,92 @@ class AddNote extends React.Component {
       .filter(group => group.user && group.user.id === user.id)
       .filter(group => group.active);
     return (
-      <div className="container">
-        {" "}
-        {justAdded ? (
-          <Paper>
-            <div>
-              <Typography>Thank you for your note!</Typography>
-              <Button onClick={() => this.handleRerender()}>Add another</Button>
-            </div>
-          </Paper>
-        ) : (
-          <div>
-            <div align="right">
-              <Link to="/add">
-                <Button>Add note on student</Button>
-              </Link>
-            </div>
-            <Paper>
-              <Typography align="center" component="h2">
-                Add notes about group
-              </Typography>
-              <br />
-              <form
-                className={classes.container}
-                noValidate
-                autoComplete="off"
-                onSubmit={evt => this.handleSubmit(evt)}
-              >
-                <Paper>
-                  <TextField
-                    id="group"
-                    select
-                    label="Group"
-                    className={classes.textField}
-                    value={this.state.groupId}
-                    onChange={evt => this.handleGroupChoice(evt)}
-                    SelectProps={{
-                      native: true,
-                      MenuProps: {
-                        className: classes.menu
-                      }
-                    }}
-                    margin="normal"
-                    variant="outlined"
-                  >
-                    <option value="" />
-                    {groupList.map(group => (
-                      <option value={group.id} key={group.id}>
-                        Skill: {skills[group.skill]} - Students:{" "}
-                        {group.students
-                          .reduce(
-                            (accum, student) => accum.concat([student.name]),
-                            []
-                          )
-                          .join(", ")}
-                      </option>
-                    ))}
-                  </TextField>
-                </Paper>
-                {chosenGroup
-                  ? chosenGroup.students.map(student => (
-                      <Paper key={student.name}>
-                        <Typography>{student.name}</Typography>
-                      </Paper>
-                    ))
-                  : ""}
-                <Button type="submit">Submit</Button>
-              </form>
-            </Paper>
-          </div>
-        )}
-      </div>
+      <center>
+        <div className={classes.container}>
+          <center>
+            {" "}
+            {justAdded ? (
+              <Paper className={classes.container}>
+                <div>
+                  <Typography>Thank you for your notes!</Typography>
+                  <Button onClick={() => this.handleRerender()}>
+                    Add more
+                  </Button>
+                </div>
+              </Paper>
+            ) : (
+              <div>
+                <div align="right">
+                  <Link to="/add">
+                    <Button>Add note on student</Button>
+                  </Link>
+                </div>
+                <div className={classes.container}>
+                  <Paper className={classes.container}>
+                    <Typography align="center" component="h2">
+                      Choose your group
+                    </Typography>
+                    <br />
+
+                    <TextField
+                      id="group"
+                      select
+                      label="Group"
+                      className={classes.textField}
+                      value={this.state.groupId}
+                      onChange={evt => this.handleGroupChoice(evt)}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      <option value="" />
+                      {groupList.length ? (
+                        groupList.map(group => (
+                          <option value={group.id} key={group.id}>
+                            Skill: {skills[group.skill]} - Students:{" "}
+                            {group.students
+                              .reduce(
+                                (accum, student) =>
+                                  accum.concat([student.name]),
+                                []
+                              )
+                              .join(", ")}
+                          </option>
+                        ))
+                      ) : (
+                        <option value="none">
+                          There are no groups assigned to you.
+                        </option>
+                      )}
+                    </TextField>
+
+                    {chosenGroup
+                      ? chosenGroup.students.map(student => (
+                          <StudentNote
+                            group={chosenGroup}
+                            student={student}
+                            key={student.name}
+                          />
+                        ))
+                      : ""}
+                    <Button onClick={() => this.handleSubmit()}>Done</Button>
+                  </Paper>
+                </div>
+              </div>
+            )}
+          </center>
+        </div>
+      </center>
     );
   }
 }
 
-AddNote.propTypes = {
+AddMultipleNotes.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -214,7 +259,10 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  addObservationServer: info => dispatch(addObservationServer(info))
+  addObservationServer: info => dispatch(addObservationServer(info)),
+  addDateServer: (id, date) => dispatch(addDateServer(id, date))
 });
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(AddNote));
+export default connect(mapState, mapDispatch)(
+  withStyles(styles)(AddMultipleNotes)
+);

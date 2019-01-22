@@ -39,7 +39,7 @@ class Routes extends Component {
           </Switch>
         )}
 
-        <Route path="/" component={Dashboard} />
+        <Route component={Login} />
       </Switch>
     );
   }

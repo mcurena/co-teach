@@ -12,8 +12,15 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./NavListItems";
-import { logout, loadStudents, loadGroups, loadObservations } from "../store";
+import { mainListItems } from "./NavListItems";
+import {
+  logout,
+  loadStudents,
+  loadGroups,
+  loadObservations,
+  groupCreatedServer,
+  updateStudents
+} from "../store";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -99,13 +106,14 @@ const styles = theme => ({
 
 class Navbar extends React.Component {
   state = {
-    open: true
+    open: false
   };
 
   async componentDidMount() {
     await this.props.loadStudents();
     await this.props.loadGroups();
     await this.props.loadObservations();
+    await this.createGroup();
   }
 
   handleDrawerOpen = () => {
@@ -115,6 +123,72 @@ class Navbar extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
+
+  async createGroup() {
+    const availableStudents = this.props.students.filter(
+      student => !student.currentlyPlaced
+    );
+    const nonos = [
+      "id",
+      "level",
+      "name",
+      "currentlyPlaced",
+      "createdAt",
+      "updatedAt",
+      "teachNStudent"
+    ];
+    let potentialGroups = {};
+    availableStudents.forEach(student => {
+      for (let key in student) {
+        if (!nonos.includes(key)) {
+          if (!potentialGroups[key]) {
+            potentialGroups[key] = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              "Not rated": []
+            };
+            potentialGroups[key][student[key]].push(student.id);
+          } else {
+            potentialGroups[key][student[key]].push(student.id);
+          }
+        }
+      }
+    });
+
+    const newGroups = [];
+    for (let skill in potentialGroups) {
+      if (potentialGroups.hasOwnProperty(skill)) {
+        for (let rating in potentialGroups[skill]) {
+          if (
+            potentialGroups[skill].hasOwnProperty(rating) &&
+            rating !== "Not rated"
+          ) {
+            if (potentialGroups[skill][rating].length > 3) {
+              const newGroup = {
+                ids: potentialGroups[skill][rating].slice(0, 4),
+                skill,
+                rating
+              };
+              newGroups.push(newGroup);
+            }
+          }
+        }
+      }
+    }
+    if (!newGroups.length) {
+      return "";
+    } else {
+      await this.props.groupCreatedServer(
+        newGroups[0].ids,
+        newGroups[0].skill,
+        newGroups[0].rating
+      );
+      await this.props.updateStudents(newGroups[0].ids);
+    }
+    this.createGroup();
+  }
 
   render() {
     const { classes, handleClick, isLoggedIn, View } = this.props;
@@ -195,7 +269,6 @@ class Navbar extends React.Component {
           <Divider />
           <List>{mainListItems}</List>
           <Divider />
-          <List>{secondaryListItems}</List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -212,16 +285,83 @@ Navbar.propTypes = {
 };
 
 const mapState = state => ({
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.id,
+  students: state.students
 });
 
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout()),
   loadStudents: () => dispatch(loadStudents()),
   loadGroups: () => dispatch(loadGroups()),
-  loadObservations: () => dispatch(loadObservations())
+  loadObservations: () => dispatch(loadObservations()),
+  groupCreatedServer: (ids, skill, rating) =>
+    dispatch(groupCreatedServer(ids, skill, rating)),
+  updateStudents: ids => dispatch(updateStudents(ids))
 });
 
 export default withRouter(
   connect(mapState, mapDispatch)(withStyles(styles)(Navbar))
 );
+
+// const potentialGroups = {
+//   authorsPurpose: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   contextClues: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   figurativeLanguage: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   authorsPurpose: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   mainIdea: {
+//       1: [],
+//       2: [],
+//       3: [],
+//       4: []
+//   },
+//   pov: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   textFeatures: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   textStructures: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   theme: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   },
+//   traitsEmotions: {
+//     1: [],
+//     2: [],
+//     3: [],
+//     4: []
+//   }
+// };

@@ -12,21 +12,23 @@ import Paper from "@material-ui/core/Paper";
 const styles = theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    alignItems: "center",
+    width: "80vw"
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16
+    marginTop: 0
   },
   menu: {
     width: 200
   }
 });
 
-class AddNote extends React.Component {
+class AddMultipleNotes extends React.Component {
   state = {
     skill: "",
     rating: "",
@@ -74,7 +76,7 @@ class AddNote extends React.Component {
       mm = "0" + mm;
     }
 
-    const date = dd + "/" + mm;
+    const date = mm + "/" + dd;
     await this.props.addObservationServer({
       skill: this.state.skill,
       rating: this.state.rating,
@@ -85,7 +87,7 @@ class AddNote extends React.Component {
       group,
       date
     });
-
+    await this.createGroup();
     this.setState({
       justAdded: true,
       skill: "",
@@ -100,6 +102,72 @@ class AddNote extends React.Component {
     this.setState({
       justAdded: false
     });
+  }
+
+  async createGroup() {
+    const availableStudents = this.props.students.filter(
+      student => !student.currentlyPlaced
+    );
+    const nonos = [
+      "id",
+      "level",
+      "name",
+      "currentlyPlaced",
+      "createdAt",
+      "updatedAt",
+      "teachNStudent"
+    ];
+    let potentialGroups = {};
+    availableStudents.forEach(student => {
+      for (let key in student) {
+        if (!nonos.includes(key)) {
+          if (!potentialGroups[key]) {
+            potentialGroups[key] = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              "Not rated": []
+            };
+            potentialGroups[key][student[key]].push(student.id);
+          } else {
+            potentialGroups[key][student[key]].push(student.id);
+          }
+        }
+      }
+    });
+
+    const newGroups = [];
+    for (let skill in potentialGroups) {
+      if (potentialGroups.hasOwnProperty(skill)) {
+        for (let rating in potentialGroups[skill]) {
+          if (
+            potentialGroups[skill].hasOwnProperty(rating) &&
+            rating !== "Not rated"
+          ) {
+            if (potentialGroups[skill][rating].length > 3) {
+              const newGroup = {
+                ids: potentialGroups[skill][rating].slice(0, 4),
+                skill,
+                rating
+              };
+              newGroups.push(newGroup);
+            }
+          }
+        }
+      }
+    }
+    if (!newGroups.length) {
+      return "";
+    } else {
+      await this.props.groupCreatedServer(
+        newGroups[0].ids,
+        newGroups[0].skill,
+        newGroups[0].rating
+      );
+      await this.props.updateStudents(newGroups[0].ids);
+    }
+    this.createGroup();
   }
 
   render() {
@@ -124,151 +192,161 @@ class AddNote extends React.Component {
     const { justAdded } = this.state;
 
     return (
-      <div className="container">
-        {" "}
-        {justAdded ? (
-          <Paper>
-            <div>
-              <Typography>Thank you for your note!</Typography>
-              <Button onClick={() => this.handleRerender()}>Add another</Button>
-            </div>
-          </Paper>
-        ) : (
-          <div>
-            <div align="right">
-              <Link to="/groupAdd">
-                <Button>Add notes about group</Button>
-              </Link>
-            </div>
-            <Paper>
-              <Typography align="center" component="h2">
-                Add note on student
-              </Typography>
-              <br />
-              <form
-                className={classes.container}
-                noValidate
-                autoComplete="off"
-                onSubmit={evt => this.handleSubmit(evt)}
-              >
-                <TextField
-                  id="student"
-                  select
-                  label="Student"
-                  className={classes.textField}
-                  value={this.state.studentName}
-                  onChange={this.handleChange("studentName")}
-                  SelectProps={{
-                    native: true,
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                  margin="normal"
-                  variant="outlined"
-                >
-                  <option value="" />
-                  {studentList.map(student => (
-                    <option value={student} key={student}>
-                      {student}
-                    </option>
-                  ))}
-                </TextField>
-
-                <TextField
-                  id="skill"
-                  select
-                  label="Skill"
-                  className={classes.textField}
-                  value={this.state.skill}
-                  onChange={this.handleChange("skill")}
-                  SelectProps={{
-                    native: true,
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                  margin="normal"
-                  variant="outlined"
-                >
-                  <option value="" />
-                  {Object.keys(skills)
-                    .sort()
-                    .map(skill => (
-                      <option value={skills[skill]} key={skill}>
-                        {skill}
-                      </option>
-                    ))}
-                </TextField>
-
-                <TextField
-                  id="rating"
-                  select
-                  label="Rating"
-                  className={classes.textField}
-                  value={this.state.rating}
-                  onChange={this.handleChange("rating")}
-                  SelectProps={{
-                    native: true,
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                  margin="normal"
-                  variant="outlined"
-                >
-                  <option value="" />
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                </TextField>
-
-                <TextField
-                  id="method"
-                  select
-                  label="Method"
-                  className={classes.textField}
-                  value={this.state.method}
-                  onChange={this.handleChange("method")}
-                  SelectProps={{
-                    native: true,
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                  margin="normal"
-                  variant="outlined"
-                >
-                  <option value="" />
-                  <option value="Individual">Individual</option>
-                  <option value="Group">Group</option>
-                  <option value="Formal">Formal</option>
-                  <option value="Informal">Informal</option>
-                </TextField>
-
-                <TextField
-                  id="outlined-textarea"
-                  label="Add Note"
-                  placeholder="Add Note"
-                  multiline
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                  value={this.state.note}
-                  onChange={this.handleChange("note")}
-                />
-                <Button type="submit">Submit</Button>
-              </form>
+      <center>
+        <div className={classes.container}>
+          {" "}
+          {justAdded ? (
+            <Paper classes={classes.container}>
+              <div>
+                <center>
+                  <Typography>Thank you for your note!</Typography>
+                  <Button onClick={() => this.handleRerender()}>
+                    Add another
+                  </Button>
+                </center>
+              </div>
             </Paper>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div>
+              <div align="right">
+                <Link to="/groupAdd">
+                  <Button>Add notes about group</Button>
+                </Link>
+              </div>
+              <div className={classes.container}>
+                <Paper className={classes.container}>
+                  <center>
+                    <Typography align="center" component="h2">
+                      Choose a student:
+                    </Typography>
+                  </center>
+                  <br />
+                  <form
+                    className={classes.container}
+                    noValidate
+                    autoComplete="off"
+                    onSubmit={evt => this.handleSubmit(evt)}
+                  >
+                    <TextField
+                      id="student"
+                      select
+                      label="Student"
+                      className={classes.textField}
+                      value={this.state.studentName}
+                      onChange={this.handleChange("studentName")}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      <option value="" />
+                      {studentList.map(student => (
+                        <option value={student} key={student}>
+                          {student}
+                        </option>
+                      ))}
+                    </TextField>
+
+                    <TextField
+                      id="skill"
+                      select
+                      label="Skill"
+                      className={classes.textField}
+                      value={this.state.skill}
+                      onChange={this.handleChange("skill")}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      <option value="" />
+                      {Object.keys(skills)
+                        .sort()
+                        .map(skill => (
+                          <option value={skills[skill]} key={skill}>
+                            {skill}
+                          </option>
+                        ))}
+                    </TextField>
+
+                    <TextField
+                      id="rating"
+                      select
+                      label="Rating"
+                      className={classes.textField}
+                      value={this.state.rating}
+                      onChange={this.handleChange("rating")}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      <option value="" />
+                      <option value={1}>1</option>
+                      <option value={2}>2</option>
+                      <option value={3}>3</option>
+                      <option value={4}>4</option>
+                    </TextField>
+
+                    <TextField
+                      id="method"
+                      select
+                      label="Method"
+                      className={classes.textField}
+                      value={this.state.method}
+                      onChange={this.handleChange("method")}
+                      SelectProps={{
+                        native: true,
+                        MenuProps: {
+                          className: classes.menu
+                        }
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      <option value="" />
+                      <option value="Individual">Individual</option>
+                      <option value="Group">Group</option>
+                      <option value="Formal">Formal</option>
+                      <option value="Informal">Informal</option>
+                    </TextField>
+
+                    <TextField
+                      id="outlined-textarea"
+                      label="Add Note"
+                      placeholder="Add Note"
+                      multiline
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                      value={this.state.note}
+                      onChange={this.handleChange("note")}
+                    />
+                    <Button type="submit">Submit</Button>
+                  </form>
+                </Paper>
+              </div>
+            </div>
+          )}
+        </div>
+      </center>
     );
   }
 }
 
-AddNote.propTypes = {
+AddMultipleNotes.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -282,4 +360,6 @@ const mapDispatch = dispatch => ({
   addObservationServer: info => dispatch(addObservationServer(info))
 });
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(AddNote));
+export default connect(mapState, mapDispatch)(
+  withStyles(styles)(AddMultipleNotes)
+);

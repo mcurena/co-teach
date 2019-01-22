@@ -1,5 +1,6 @@
 import axios from "axios";
 import history from "../history";
+import { loadStudents, loadGroups, loadObservations } from "../store";
 
 /**
  * ACTION TYPES
@@ -40,6 +41,9 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data));
+    dispatch(loadGroups());
+    dispatch(loadObservations());
+    dispatch(loadStudents());
     history.push("/dashboard");
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);

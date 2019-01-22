@@ -56,6 +56,18 @@ Group.createNew = async function(ids, skill, rating) {
   return groupInstance;
 };
 
+Group.complete = async function(id) {
+  const group = await Group.findById(id, { include: Student });
+  const students = await Promise.all(
+    group.students.map(student => Student.findById(student.id))
+  );
+  await Promise.all(
+    students.map(student => student.update({ currentlyPlaced: false }))
+  );
+  await group.update({ active: false });
+  return group;
+};
+
 Group.addDate = async function(id, date) {
   const group = await Group.findById(id);
   if (group.dates === "Pending") {
@@ -63,6 +75,9 @@ Group.addDate = async function(id, date) {
   } else {
     const updated = `${group.dates}, ${date}`;
     await group.update({ dates: updated });
+    if (group.dates.length > 21) {
+      await Group.complete(id);
+    }
   }
 };
 
@@ -77,18 +92,6 @@ Group.addNote = async function(id, note) {
     await group.update({ notes: updated });
   }
 
-  return group;
-};
-
-Group.complete = async function(id) {
-  const group = await Group.findById(id, { include: Student });
-  const students = await Promise.all(
-    group.students.map(student => Student.findById(student.id))
-  );
-  await Promise.all(
-    students.map(student => student.update({ currentlyPlaced: false }))
-  );
-  await group.update({ active: false });
   return group;
 };
 

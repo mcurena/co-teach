@@ -255,36 +255,15 @@
     },
     {
       "name": "Mason Amaya",
-      "level": "G",
-      "authorsPurpose": "3",
-      "mainIdea": "3",
-      "traitsEmotions": "2",
-      "figurativeLanguage": "1",
-      "textStructures": "3",
-      "contextClues": "3",
-      "pov": "2"
+      "level": "G"
     },
     {
       "name": "Samantha Berezow",
-      "level": "R",
-      "authorsPurpose": "3",
-      "mainIdea": "3",
-      "traitsEmotions": "2",
-      "figurativeLanguage": "1",
-      "textStructures": "3",
-      "contextClues": "3",
-      "pov": "2"
+      "level": "R"
     },
     {
       "name": "Hiromi Palmero",
-      "level": "O",
-      "authorsPurpose": "3",
-      "mainIdea": "3",
-      "traitsEmotions": "2",
-      "figurativeLanguage": "1",
-      "textStructures": "3",
-      "contextClues": "3",
-      "pov": "2"
+      "level": "O"
     }
   ]
 }

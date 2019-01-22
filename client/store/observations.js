@@ -1,16 +1,17 @@
 import axios from "axios";
+import socket from "../socket";
 
 const GET_OBSERVATIONS = "GET_OBSERVATIONS";
 const ADD_OBSERVATION = "ADD_OBSERVATION";
 
 const defaultObservations = [];
 
-const getObservations = observations => ({
+export const getObservations = observations => ({
   type: GET_OBSERVATIONS,
   observations
 });
 
-const addObservation = newObservation => ({
+export const addObservation = newObservation => ({
   type: ADD_OBSERVATION,
   newObservation
 });
@@ -23,6 +24,7 @@ export const loadObservations = () => async dispatch => {
 export const addObservationServer = info => async dispatch => {
   const { data } = await axios.post("/api/observations/add", info);
   dispatch(addObservation(data || {}));
+  socket.emit("add-observation", data);
 };
 
 export default function(state = defaultObservations, action) {
