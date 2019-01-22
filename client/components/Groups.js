@@ -10,7 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FilterButton from "./FilterButton";
 import { Link } from "react-router-dom";
-import { clearSkillFilter, clearActiveFilter } from "../store";
+import {
+  clearSkillFilter,
+  clearActiveFilter,
+  groupCreatedServer
+} from "../store";
 import { connect } from "react-redux";
 
 const styles = theme => ({
@@ -30,6 +34,76 @@ const styles = theme => ({
 });
 
 class Groups extends React.Component {
+  async componentDidMount() {
+    await this.createGroup();
+  }
+
+  async createGroup() {
+    const availableStudents = this.props.students.filter(
+      student => !student.currentlyPlaced
+    );
+    const nonos = [
+      "id",
+      "level",
+      "name",
+      "currentlyPlaced",
+      "createdAt",
+      "updatedAt",
+      "teachNStudent"
+    ];
+    let potentialGroups = {};
+    availableStudents.forEach(student => {
+      for (let key in student) {
+        if (!nonos.includes(key)) {
+          if (!potentialGroups[key]) {
+            potentialGroups[key] = {
+              1: [],
+              2: [],
+              3: [],
+              4: [],
+              "Not rated": []
+            };
+            potentialGroups[key][student[key]].push(student.id);
+          } else {
+            potentialGroups[key][student[key]].push(student.id);
+          }
+        }
+      }
+    });
+
+    const newGroups = [];
+    for (let skill in potentialGroups) {
+      if (potentialGroups.hasOwnProperty(skill)) {
+        for (let rating in potentialGroups[skill]) {
+          if (
+            potentialGroups[skill].hasOwnProperty(rating) &&
+            rating !== "Not rated"
+          ) {
+            if (potentialGroups[skill][rating].length > 3) {
+              const newGroup = {
+                ids: potentialGroups[skill][rating].slice(0, 4),
+                skill,
+                rating
+              };
+              newGroups.push(newGroup);
+            }
+          }
+        }
+      }
+    }
+    if (!newGroups.length) {
+      return "";
+    } else {
+      await this.props.groupCreatedServer(
+        newGroups[0].ids,
+        newGroups[0].skill,
+        newGroups[0].rating
+      );
+      await this.props.updateStudents(newGroups[0].ids);
+    }
+    this.createGroup();
+  }
+
   componentWillUnmount() {
     this.props.clearSkillFilter();
     this.props.clearActiveFilter();
@@ -155,7 +229,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   clearSkillFilter: () => dispatch(clearSkillFilter()),
-  clearActiveFilter: () => dispatch(clearActiveFilter())
+  clearActiveFilter: () => dispatch(clearActiveFilter()),
+  groupCreatedServer: (ids, skill, rating) =>
+    dispatch(groupCreatedServer(ids, skill, rating))
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Groups));
