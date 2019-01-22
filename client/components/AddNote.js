@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { addObservationServer } from "../store";
+import { addObservationServer, groupCreatedServer } from "../store";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -37,6 +37,10 @@ class AddMultipleNotes extends React.Component {
     studentName: "",
     justAdded: false
   };
+
+  async componentWillUnmount() {
+    await this.createGroup();
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -87,7 +91,6 @@ class AddMultipleNotes extends React.Component {
       group,
       date
     });
-    await this.createGroup();
     this.setState({
       justAdded: true,
       skill: "",
@@ -357,7 +360,9 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  addObservationServer: info => dispatch(addObservationServer(info))
+  addObservationServer: info => dispatch(addObservationServer(info)),
+  groupCreatedServer: (ids, skill, rating) =>
+    dispatch(groupCreatedServer(ids, skill, rating))
 });
 
 export default connect(mapState, mapDispatch)(

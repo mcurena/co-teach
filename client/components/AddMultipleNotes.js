@@ -39,6 +39,9 @@ class AddMultipleNotes extends React.Component {
     chosenGroup: "",
     groupId: ""
   };
+  async componentWillUnmount() {
+    await this.createGroup();
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -69,7 +72,6 @@ class AddMultipleNotes extends React.Component {
 
     const date = mm + "/" + dd;
     await this.props.addDateServer(this.state.groupId, date);
-    await this.createGroup();
     this.setState({
       justAdded: true,
       chosenGroup: "",
