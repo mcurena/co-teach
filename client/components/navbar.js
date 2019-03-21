@@ -110,9 +110,11 @@ class Navbar extends React.Component {
   };
 
   async componentDidMount() {
-    await this.props.loadStudents();
-    await this.props.loadGroups();
-    await this.props.loadObservations();
+    await Promise.all(
+      this.props.loadStudents(),
+      this.props.loadGroups(),
+      this.props.loadObservations()
+    );
     await this.createGroup();
   }
 
